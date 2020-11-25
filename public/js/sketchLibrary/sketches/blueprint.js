@@ -30,20 +30,12 @@ let blueprintTemplate = function (p) {
 		p.canvas.parent("#canvas_container");
 		p.background(0, 120, 194);
 
-		//Save blueprint button, calls p.saveBlueprintCanvas method
-		p.saveButton = p.createButton('Save Blueprint');
-		//p.saveButton.position(p.windowWidth - p.sidenavWidth - p.margin - p.saveButtonWpos, p.canvasParams.h - 40);
-		p.saveButton.position(250, 250);
-		//p.saveButton.style('cursor', 'pointer');
-		p.saveButton.parent("#canvas_container");
-		p.saveButton.mousePressed(p.saveBlueprintCanvas);
-
 		//Upload file button, calls p.handleFile
 		p.fileInput = p.createFileInput(p.handleFile);
 		p.fileInput.style('cursor', 'pointer');
-		p.fileInput.parent("#canvas_container");
+		p.fileInput.parent("#header");
 		//p.fileInput.position(p.canvasWidth/30 - 25, p.canvasParams.h - 40);
-		p.fileInput.position(200, 200);
+		//p.fileInput.position(0, 0);
 		
 		//p.borders();
 	}
@@ -319,7 +311,7 @@ let blueprintTemplate = function (p) {
 	}
 
 	p.saveBlueprintCanvas = function() {
-		p.saveCanvas(blueprint.canvas, 'Blueprint', 'png');
+		p.saveCanvas(blueprint.canvas, 'Dashboard', 'png');
 	}
 
 	p.handleFile = function(file) {

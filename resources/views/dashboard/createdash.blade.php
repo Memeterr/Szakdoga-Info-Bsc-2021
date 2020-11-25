@@ -20,17 +20,17 @@
 @endsection
 
 @section('header_title')
-    Dashboard
+    Create Dashboard
 @endsection
 
 @section('header_menus')
     <div class="ml-10">
-        <button class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
-        Save blueprint</button>
+        <button onclick="blueprint.saveBlueprintCanvas()" id="savebutton" class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
+        Save dashboard</button>
     </div>
     <div class="ml-2">
-        <button class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
-        Upload image</button>
+        <div class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300">
+        Upload image:</div>
     </div>
 @endsection
 
@@ -57,7 +57,10 @@
                     </svg>
                     Door Lock
                 </div>
-                <div class="select-none flex w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100">
+                <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100">
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 3.636a1 1 0 010 1.414 7 7 0 000 9.9 1 1 0 11-1.414 1.414 9 9 0 010-12.728 1 1 0 011.414 0zm9.9 0a1 1 0 011.414 0 9 9 0 010 12.728 1 1 0 11-1.414-1.414 7 7 0 000-9.9 1 1 0 010-1.414zM7.879 6.464a1 1 0 010 1.414 3 3 0 000 4.243 1 1 0 11-1.415 1.414 5 5 0 010-7.07 1 1 0 011.415 0zm4.242 0a1 1 0 011.415 0 5 5 0 010 7.072 1 1 0 01-1.415-1.415 3 3 0 000-4.242 1 1 0 010-1.415zM10 9a1 1 0 011 1v.01a1 1 0 11-2 0V10a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
                     Temp
                 </div>
                 <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100">

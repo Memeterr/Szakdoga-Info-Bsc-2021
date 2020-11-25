@@ -28,7 +28,10 @@
                 
                                 @auth
                                     <a href="{{ route('dashboard') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
-                                        Dashboard</a>
+                                        My Dashboards</a>
+
+                                    <a href="{{ route('dashboard_create') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                        Create Dashboards</a>
                     
                                     <a href="{{ route('charts') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Charts</a>
@@ -37,7 +40,7 @@
                         </div>
                     </div>
                     <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
+                        <div class="ml-8 flex items-baseline space-x-4">
                             @auth
                                 <a href="#" class="select-none flex px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                     {{ auth()->user()->name }}
@@ -72,7 +75,7 @@
         </nav>
 
         <header class="bg-white shadow  mb-6">
-            <div class="flex items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div id="header" class="flex items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <h1 class="text-3xl font-bold leading-tight text-gray-900">
                     @yield('header_title')
                 </h1>
