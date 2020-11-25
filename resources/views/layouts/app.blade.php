@@ -31,7 +31,7 @@
                                         My Dashboards</a>
 
                                     <a href="{{ route('dashboard_create') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
-                                        Create Dashboards</a>
+                                        Create Dashboard</a>
                     
                                     <a href="{{ route('charts') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Charts</a>

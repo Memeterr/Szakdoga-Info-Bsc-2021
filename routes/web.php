@@ -23,7 +23,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/newdashboard', [DashboardController::class, 'create'])->name('dashboard_create');
+Route::get('/newdashboard', [DashboardController::class, 'index_new'])->name('dashboard_create');
+Route::post('/newdashboard', [DashboardController::class, 'storedash']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 

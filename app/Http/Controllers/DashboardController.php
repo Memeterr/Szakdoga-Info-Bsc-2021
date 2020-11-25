@@ -17,9 +17,13 @@ class DashboardController extends Controller
         return view('dashboard.indexdash');
     }
 
-    public function create()
+    public function index_new()
     {
-        
         return view('dashboard.createdash');
+    }
+
+    public function storedash(Request $request)
+    {
+        dd($request);
     }
 }

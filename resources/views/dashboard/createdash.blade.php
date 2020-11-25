@@ -16,6 +16,7 @@
     
     <!-- Other .js files -->
     <script type="text/javascript" src="{{ asset('js/dashboard/canvas-icon-control.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/dashboard/add-dashvalues.js') }}"></script>
     
 @endsection
 
@@ -25,8 +26,12 @@
 
 @section('header_menus')
     <div class="ml-10">
-        <button onclick="blueprint.saveBlueprintCanvas()" id="savebutton" class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
-        Save dashboard</button>
+        <form id="form" action="{{ route('dashboard_create') }}" method="post">
+            @csrf
+            <!-- onclick="blueprint.saveBlueprintCanvas()" -->
+            <button onclick="addDashValues()" type="submit" id="savebutton" class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
+            Save dashboard</button>
+        </form>
     </div>
     <div class="ml-2">
         <div class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300">
