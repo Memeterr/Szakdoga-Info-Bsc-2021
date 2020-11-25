@@ -33,8 +33,8 @@ let blueprintTemplate = function (p) {
 		//Save blueprint button, calls p.saveBlueprintCanvas method
 		p.saveButton = p.createButton('Save Blueprint');
 		//p.saveButton.position(p.windowWidth - p.sidenavWidth - p.margin - p.saveButtonWpos, p.canvasParams.h - 40);
-		p.saveButton.position(50, 50);
-		p.saveButton.style('cursor', 'pointer');
+		p.saveButton.position(250, 250);
+		//p.saveButton.style('cursor', 'pointer');
 		p.saveButton.parent("#canvas_container");
 		p.saveButton.mousePressed(p.saveBlueprintCanvas);
 
@@ -43,7 +43,7 @@ let blueprintTemplate = function (p) {
 		p.fileInput.style('cursor', 'pointer');
 		p.fileInput.parent("#canvas_container");
 		//p.fileInput.position(p.canvasWidth/30 - 25, p.canvasParams.h - 40);
-		p.fileInput.position(60, 60);
+		p.fileInput.position(200, 200);
 		
 		//p.borders();
 	}

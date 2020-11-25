@@ -22,15 +22,15 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 @guest
-                                    <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                    <a href="/" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Home</a>
                                 @endguest
                 
                                 @auth
-                                    <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                    <a href="{{ route('dashboard') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Dashboard</a>
                     
-                                    <a href="{{ route('charts') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                    <a href="{{ route('charts') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Charts</a>
                                 @endauth
                             </div>
@@ -39,20 +39,30 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             @auth
-                                <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
-                                    {{ auth()->user()->name }}</a>
+                                <a href="#" class="select-none flex px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                    {{ auth()->user()->name }}
+                                
+                                    <svg class="ml-2" width=20 height=20 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </a>
                             
-                                <form action="{{ route('logout') }}" method="post" class="inline px-3 py-2 rounded-md hover:text-white hover:bg-gray-700">
+                                <form action="{{ route('logout') }}" method="post" class="flex px-3 py-2 rounded-md hover:text-white hover:bg-gray-700">
                                     @csrf
-                                    <button type="submit" class="text-sm font-medium text-gray-300">Logout</button>
+                                    <button type="submit" class="select-none text-sm font-medium text-gray-300">
+                                        Logout</button>
+
+                                    <svg class="ml-2" width=20 height=20 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
                                 </form>
                             @endauth
 
                             @guest
-                                <a href="{{ route('login') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                <a href="{{ route('login') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                     Login</a>
                                 
-                                <a href="{{ route('register') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                <a href="{{ route('register') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                     Register</a>
                             @endguest
                         </div>
@@ -62,10 +72,11 @@
         </nav>
 
         <header class="bg-white shadow  mb-6">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <h1 class="text-3xl font-bold leading-tight text-gray-900">
                     @yield('header_title')
                 </h1>
+                @yield('header_menus')
             </div>
         </header>
 
