@@ -22,9 +22,11 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/{dashboard:id}', [DashboardController::class, 'show'])->name('dashboard.show');
+Route::delete('/dashboard/{dashboard}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
-Route::get('/newdashboard', [DashboardController::class, 'index_new'])->name('dashboard_create');
-Route::post('/newdashboard', [DashboardController::class, 'storedash']);
+Route::get('/newdashboard', [DashboardController::class, 'index_newdash'])->name('dashboard_create');
+Route::post('/newdashboard', [DashboardController::class, 'store']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 

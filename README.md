@@ -1,11 +1,12 @@
-### Info
+# Info
 
 This is a project for my degree
 
 ## TODO
 
-* create dashboard migration
-    * a user can have many dashboards
+* on show.blade.php -> canvas needs to hide the upload file button
+	* canvas needs to check if upload button should show
+
 * store the data of the canvas objects (device -type -position)
 * clicking on the 'save dashboard' button will save all the put down devices datas
 
