@@ -14,7 +14,7 @@
             			<a href="{{ route('dashboard.show', $dashboard) }}" class="font-bold mr-1">{{ $dashboard->name }}</a> <span class="text-gry-600 text-sm">{{ $dashboard->created_at }}</span>
 
             			<p>Template: From image / Custom</p>
-            			<p>Devices:</p>
+            			<p>Devices: {{ $dashboard->windows->count() }}</p>
 
             			<div>
             				<form action="{{ route('dashboard.destroy', $dashboard) }}" method="post">

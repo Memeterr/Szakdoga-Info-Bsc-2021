@@ -16,4 +16,8 @@ class Dashboard extends Model
     public function user() {
     	return $this->belongsTo(User::class);
     }
+
+    public function windows() {
+        return $this->hasMany(CanvasWindow::class);
+    }
 }
