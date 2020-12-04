@@ -1,10 +1,12 @@
 $(function () {
 	//You can send statis data right away
-	//$('#form').append('<input type="hidden" name="devicename[type]" value="light" />');
+	//$('#form').append('<input type="hidden" name="imageSet" value="' + blueprint.imageSet + 't" />');
 	//$('#form').append('<input type="hidden" name="devicename[x-coor]" value="10" />');
 });
 //For data which could change, use a button's onclick attribute
 function addDashValues() {
+	$('#form').append('<input type="hidden" name="imageSet" value="' + blueprint.imageSet + '" />');
+
 	//The timestamp value could be an id if needed
 	for(let i=0; i<blueprint.windowFrames.length; i++) {
 		$('#form').append('<input type="hidden" name="window_' + i + '[x]" value="' + blueprint.windowFrames[i].x + '" />');

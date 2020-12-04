@@ -4,6 +4,10 @@
     {{ $dashboard->name }}
 @endsection
 
+<script type="text/javascript">
+	const windows = @json($windows);
+</script>
+
 @section('scripts')
     
     <x-canvas-scripts />

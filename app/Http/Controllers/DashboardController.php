@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 
 use App\Models\CanvasWindow;
 use App\Models\Dashboard;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,7 +19,10 @@ class DashboardController extends Controller
     public function index()
     {
         //$dashboards = Dashboard::where('user_id', '=', auth()->user()->id)->get();
-        $dashboards = Dashboard::latest()->with('user')->where('user_id', '=', auth()->user()->id)->paginate(4);
+        $dashboards = Dashboard::latest()
+            ->with('user')
+            ->where('user_id', '=', auth()->user()->id)
+            ->paginate(4);
         
         return view('dashboard.indexdash', [
             'dashboards' => $dashboards
@@ -31,14 +35,17 @@ class DashboardController extends Controller
     }
 
     public function show(Dashboard $dashboard) {
+        $windows = CanvasWindow::where('dashboard_id', $dashboard->id)->get();
+
         return view('dashboard.show', [
-            'dashboard' => $dashboard
+            'dashboard' => $dashboard,
+            'windows' => $windows
         ]);
     }
 
     public function store(Request $request)
     {
-        //dd($request->door_0['x']);
+        //dd($request->imageSet);
 
         $this->validate($request, [
             'dashname' => 'nullable|max:50',
@@ -51,7 +58,8 @@ class DashboardController extends Controller
         }
 
         $request->user()->dashboards()->create([
-            'name' => $dashname
+            'name' => $dashname,
+            'imageSet' => $request->imageSet
         ]);
         $dash_id = Dashboard::latest()->first()->id;
 

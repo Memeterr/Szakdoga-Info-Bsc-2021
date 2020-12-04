@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+<script type="text/javascript">
+    const windows = [];
+</script>
+
 @section('scripts')
     <x-canvas-scripts />
 @endsection

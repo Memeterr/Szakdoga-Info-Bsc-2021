@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDashboardsTable extends Migration
+class CreateLightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateDashboardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dashboards', function (Blueprint $table) {
+        Schema::create('lights', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
-            $table->boolean('imageSet');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('dashboard_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('password');
+            $table->string('topics');
+            $table->boolean('on');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateDashboardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dashboards');
+        Schema::dropIfExists('lights');
     }
 }

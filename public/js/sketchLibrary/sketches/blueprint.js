@@ -6,6 +6,8 @@ let blueprintTemplate = function (p) {
 	p.referenceWindowFrame = new windowFrame(30, 90, p);
 	p.referenceDoor = new door(100, 122, 50, 50, p.PI, p.PI + p.HALF_PI, p);
 
+	p.imageSet = false;
+
 	p.margin = 57;
 	p.saveButtonWpos = 140;
 
@@ -17,6 +19,11 @@ let blueprintTemplate = function (p) {
 	p.windowFrames = [];
 	p.walls = [];
 	p.linePoints = [];
+
+	p.singleDashView = false;
+    if (window.location.href.indexOf("/dashboard") > -1) {
+      p.singleDashView = true;
+    }
 
 	//p.countSelected = 0;
 
@@ -31,9 +38,18 @@ let blueprintTemplate = function (p) {
 		p.background(0, 120, 194);
 
 		//Upload file button, calls p.handleFile
-		p.fileInput = p.createFileInput(p.handleFile);
-		p.fileInput.style('cursor', 'pointer');
-		p.fileInput.parent("#header");
+		//Only appears when creating a new dash
+		if (!p.singleDashView) {
+			p.fileInput = p.createFileInput(p.handleFile);
+			p.fileInput.style('cursor', 'pointer');
+			p.fileInput.parent("#header");
+		}
+
+		//Initialize the objects if there's any
+		if (windows?.length) {
+			windows.forEach(p.initializeWindow);
+		}
+		
 		//p.fileInput.position(p.canvasWidth/30 - 25, p.canvasParams.h - 40);
 		//p.fileInput.position(0, 0);
 		
@@ -269,6 +285,18 @@ let blueprintTemplate = function (p) {
 		}
 	}
 
+	p.initializeWindow = function(window) {
+		if (window.isRotated) {
+			p.windowFrame = new windowFrame(parseFloat(window.x), parseFloat(window.y), p, p.referenceWindowFrame.h, p.referenceWindowFrame.w);
+			p.windowFrame.isPlaced = true;
+			p.windowFrames.push(p.windowFrame);
+		} else {
+			p.windowFrame = new windowFrame(parseFloat(window.x), parseFloat(window.y), p, p.referenceWindowFrame.w, p.referenceWindowFrame.h);
+			p.windowFrame.isPlaced = true;
+			p.windowFrames.push(p.windowFrame);
+		}
+	}
+
 	p.cursorOverSquare = function (x, y, w, h) {
 		if ( (p.mouseX > x) && (p.mouseX < (x + w)) && (p.mouseY > y) && (p.mouseY < (y + h)) ) {
 			return true;
@@ -319,6 +347,7 @@ let blueprintTemplate = function (p) {
 		if (file.type === 'image') {
 			p.uploadedImg = p.createImg(file.data, '');
 			p.uploadedImg.hide();
+			p.imageSet = true;
 		} else {
 			p.uploadedImg = null;
 		}

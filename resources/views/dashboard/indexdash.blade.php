@@ -12,9 +12,15 @@
             	@foreach ($dashboards as $dashboard)
             		<div class="mb-4">
             			<a href="{{ route('dashboard.show', $dashboard) }}" class="font-bold mr-1">{{ $dashboard->name }}</a> <span class="text-gry-600 text-sm">{{ $dashboard->created_at }}</span>
-
-            			<p>Template: From image / Custom</p>
-            			<p>Devices: {{ $dashboard->windows->count() }}</p>
+            			
+            			@if ( $dashboard->imageSet )
+            				<p>Template: From image</p>
+        			 	@else
+        			 		<p>Template: Custom</p>
+        			 	@endif
+  
+            			<p>Drawables: {{ $dashboard->windows->count() }}</p>
+            			<p>Devices: {{ $dashboard->lights->count() }}</p>
 
             			<div>
             				<form action="{{ route('dashboard.destroy', $dashboard) }}" method="post">

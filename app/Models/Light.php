@@ -5,24 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dashboard extends Model
+class Light extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+    	'user_id',
+    	'dashboard_id',
     	'name',
-        'imageSet'
+        'password',
+        'topics',
+        'on'
     ];
 
     public function user() {
     	return $this->belongsTo(User::class);
-    }
-
-    public function windows() {
-        return $this->hasMany(CanvasWindow::class);
-    }
-
-    public function lights() {
-        return $this->hasMany(Light::class);
     }
 }
