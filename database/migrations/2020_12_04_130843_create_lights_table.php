@@ -17,6 +17,8 @@ class CreateLightsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('dashboard_id')->constrained()->onDelete('cascade');
+            $table->double('x', 14, 4);
+            $table->double('y', 14, 4);
             $table->string('name');
             $table->string('password');
             $table->string('topics');

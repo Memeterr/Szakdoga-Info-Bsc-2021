@@ -42,7 +42,10 @@ let blueprintTemplate = function (p) {
 		p.canvas = p.createCanvas(p.canvasWidth, p.canvasParams.h);
 		p.canvas.parent("#canvas_container");
 		p.background(0, 120, 194);
-		
+
+		//Images
+		p.lightOffImg = p.loadImage('../js/sketchLibrary/assets/lightOff.png');
+		p.lightOnImg = p.loadImage('../js/sketchLibrary/assets/lightOn.png');
 
 		//Upload file button, calls p.handleFile
 		//Only appears when creating a new dash
@@ -55,6 +58,10 @@ let blueprintTemplate = function (p) {
 		//Initialize the objects if there's any
 		if (windows?.length) {
 			windows.forEach(p.initializeWindow);
+		}
+		//Initialize the devices if there's any
+		if (lights?.length) {
+			lights.forEach(p.initializeLight);
 		}
 		
 		//p.fileInput.position(p.canvasWidth/30 - 25, p.canvasParams.h - 40);
@@ -343,6 +350,16 @@ let blueprintTemplate = function (p) {
 			p.windowFrame.isPlaced = true;
 			p.windowFrames.push(p.windowFrame);
 		}
+	}
+
+	p.initializeLight = function(light) {
+		p.light = new Light(parseFloat(light.x), parseFloat(light.y), p);
+		p.light.name = light.name;
+		p.light.topics = light.topics;
+		p.light.password = light.password;
+		p.light.isOn = light.on;
+		p.light.isPlaced = true;
+		p.lights.push(p.light);
 	}
 
 	p.getLastDevice = function () {

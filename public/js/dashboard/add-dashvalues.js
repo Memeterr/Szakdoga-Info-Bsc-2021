@@ -14,6 +14,7 @@ function addDashValues() {
 		$('#form').append('<input type="hidden" name="light_' + i + '[isPlaced]" value="' + blueprint.lights[i].isPlaced + '" />');
 		$('#form').append('<input type="hidden" name="light_' + i + '[isOn]" value="' + blueprint.lights[i].isOn + '" />');
 		$('#form').append('<input type="hidden" name="light_' + i + '[name]" value="' + blueprint.lights[i].name + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[pwd]" value="' + blueprint.lights[i].password + '" />');
 		$('#form').append('<input type="hidden" name="light_' + i + '[topics]" value="' + blueprint.lights[i].topics + '" />');
 		$('#form').append('<input type="hidden" name="light_' + i + '[timeStamp]" value="' + blueprint.lights[i].timeStamp + '" />');
 		$('#form').append('<input type="hidden" name="light_' + i + '[firstPlacedown]" value="' + blueprint.lights[i].firstPlacedown + '" />');

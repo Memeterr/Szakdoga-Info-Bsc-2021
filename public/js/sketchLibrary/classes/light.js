@@ -9,6 +9,7 @@ class Light {
 
 		this.name = "";
 		this.topics = "";
+		this.password = "";
 		this.type = "light";
 		this.isOn = false;
 
@@ -34,10 +35,13 @@ class Light {
 
 	showOn() {
 		this.p5.push();
-		this.p5.strokeWeight(2);
-		this.p5.stroke(255);
-		this.p5.fill(255, 250, 99);
-		this.p5.rect(this.x, this.y, this.w, this.h, 5);
+
+		this.p5.image(this.p5.lightOnImg, this.x, this.y, this.w, this.h);
+
+		this.p5.textSize(10);
+		this.p5.noStroke();
+		this.p5.text(this.name, this.x + this.w/2 - this.getTextWidth()/2, this.y + this.h + 12);
+
 		this.p5.pop();
 		//this.img = tools.lightOnIcon;
 		//tools.lightOnIcon.loadPixels();
@@ -47,15 +51,11 @@ class Light {
 	showOff() {
 		this.p5.push();
 
-		this.p5.strokeWeight(2);
-		this.p5.stroke(255);
-		this.p5.fill(255);
-		this.p5.rect(this.x, this.y, this.w, this.h, 5);
-		this.p5.fill(0);
+		this.p5.image(this.p5.lightOffImg, this.x, this.y, this.w, this.h);
 
 		this.p5.textSize(10);
 		this.p5.noStroke();
-		this.p5.text(this.name, this.x + this.w/2 - this.getTextWidth()/2, this.y + this.h + 10);
+		this.p5.text(this.name, this.x + this.w/2 - this.getTextWidth()/2, this.y + this.h + 12);
 
 		this.p5.pop();
 		//this.img = tools.lightOffIcon;
@@ -64,11 +64,25 @@ class Light {
 	}
 
 	showSelected() {
+		let correction = 4;
+
 		this.p5.push();
-		this.p5.strokeWeight(2);
-		this.p5.stroke(255);
+
+		if(this.isOn) {
+			this.p5.image(this.p5.lightOnImg, this.x, this.y, this.w, this.h);
+		} else {
+			this.p5.image(this.p5.lightOffImg, this.x, this.y, this.w, this.h);
+		}
+
+		this.p5.noFill();
+		this.p5.stroke(160, 0, 0);
+		this.p5.strokeWeight(1);
+		this.p5.rect(this.x - correction/2, this.y - correction/2, this.w + correction, this.h + correction);
+
+		this.p5.textSize(12);
 		this.p5.fill(160, 0, 0);
-		this.p5.rect(this.x, this.y, this.w, this.h, 5);
+		this.p5.text(this.name, this.x + this.w/2 - this.getTextWidth()/2, this.y + this.h + 12);
+
 		this.p5.pop();
 	}
 

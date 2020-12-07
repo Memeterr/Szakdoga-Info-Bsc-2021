@@ -2,6 +2,7 @@
 
 <script type="text/javascript">
     const windows = [];
+    const lights = [];
 </script>
 
 @section('scripts')
@@ -14,7 +15,7 @@
 
 @section('header_menus')
     <div class="ml-10">
-        <form id="form" class="flex" action="{{ route('dashboard_create') }}" method="post">
+        <form id="form" class="flex mb-0" action="{{ route('dashboard_create') }}" method="post">
             @csrf
             <!-- onclick="blueprint.saveBlueprintCanvas()" -->
             <button onclick="addDashValues()" type="submit" id="savebutton" class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">

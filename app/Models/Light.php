@@ -12,6 +12,8 @@ class Light extends Model
     protected $fillable = [
     	'user_id',
     	'dashboard_id',
+        'x',
+        'y',
     	'name',
         'password',
         'topics',

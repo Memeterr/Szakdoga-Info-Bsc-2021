@@ -10,7 +10,7 @@
     
     <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
       <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        <div class="sm:flex sm:items-start">
+        <div class="sm:flex sm:items-start ">
           <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
             <!-- Heroicon name: exclamation -->
             <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -23,13 +23,18 @@
             </h3>
             <div class="mt-2">
               <p class="text-sm text-gray-500">
-                Setup your device's parameters.
+                Set your device's parameters.
               </p>
             </div>
             <div class="mt-2">
               <label for="devicename" class="sr-only">Device Name</label>
                 <input id="deviceNameInput" type="text" name="devicename" id="devicename" placeholder="Device Name" class="bg-gray-100 border-2 w-full p-1 rounded-lg"value="">
                 <p id="deviceNameError" class="hidden text-sm pl-1 text-red-700">Device name must be set!</p>
+            </div>
+            <div class="mt-2">
+              <label for="devicePwd" class="sr-only">Device Password</label>
+                <input id="devicePwdInput" type="password" name="devicePwd" id="devicePwd" placeholder="Device Password" class="bg-gray-100 border-2 w-full p-1 rounded-lg"value="">
+                <p id="devicePwdError" class="hidden text-sm pl-1 text-red-700">Device password must be set!</p>
             </div>
             <div class="mt-2">
               <label for="topics" class="sr-only">Topics</label>

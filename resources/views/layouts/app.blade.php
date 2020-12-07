@@ -32,13 +32,11 @@
 
                                     <a href="{{ route('dashboard_create') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Create Dashboard</a>
-                    
-                                    <a href="{{ route('charts') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
-                                        Charts</a>
                                 @endauth
                             </div>
                         </div>
                     </div>
+                    <div class="flex items-center">
                     <div class="hidden md:block">
                         <div class="ml-8 flex items-baseline space-x-4">
                             @auth
@@ -50,7 +48,7 @@
                                     </svg>
                                 </a>
                             
-                                <form action="{{ route('logout') }}" method="post" class="flex px-3 py-2 rounded-md hover:text-white hover:bg-gray-700">
+                                <form action="{{ route('logout') }}" method="post" class="flex px-3 py-2 rounded-md hover:text-white hover:bg-gray-700 mb-0">
                                     @csrf
                                     <button type="submit" class="select-none text-sm font-medium text-gray-300">
                                         Logout</button>
@@ -69,6 +67,7 @@
                                     Register</a>
                             @endguest
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

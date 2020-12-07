@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\CanvasWindow;
 use App\Models\Dashboard;
 use App\Models\User;
+use App\Models\Light;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -35,17 +37,20 @@ class DashboardController extends Controller
     }
 
     public function show(Dashboard $dashboard) {
-        $windows = CanvasWindow::where('dashboard_id', $dashboard->id)->get();
+        $windows = CanvasWindow::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
+
+        $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
 
         return view('dashboard.show', [
             'dashboard' => $dashboard,
-            'windows' => $windows
+            'windows' => $windows,
+            'lights' => $lights
         ]);
     }
 
     public function store(Request $request)
     {
-        //dd($request->imageSet);
+        //dd($request);
 
         $this->validate($request, [
             'dashname' => 'nullable|max:50',
@@ -72,6 +77,18 @@ class DashboardController extends Controller
                     'isPlaced' => $value['isPlaced'],
                     'isRotated' => $value['isRotated'],
                     'firstPlacedown' => $value['firstPlacedown'],
+                ]);
+            }
+            if( Str::contains($key , 'light') ) {
+                Light::create([
+                    'user_id' => $request->user()->id,
+                    'dashboard_id' => $dash_id,
+                    'x' => $value['x'],
+                    'y' => $value['y'],
+                    'name' => $value['name'],
+                    'password' => Hash::make($value['pwd']),
+                    'topics' => $value['topics'],
+                    'on' => $value['isOn'],
                 ]);
             }
         }

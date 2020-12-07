@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function dashboards() {
         return $this->hasMany(Dashboard::class);
     }
+
+    public function lights() {
+        return $this->hasMany(Light::class);
+    }
 }
