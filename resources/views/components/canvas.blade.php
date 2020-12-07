@@ -1,4 +1,5 @@
-<div id="canvas_container" class="relative w-8/12 bg-white p-6 rounded-lg">
+<div class="relative w-8/12 bg-white p-6 rounded-lg">
+    <div id="canvas_container">
     <div class="cursor-pointer absolute grid grid-flow-col grid-cols-3 items-center justify-center w-2/6 h-12 bg-gray-200 left-2/4 transform -translate-x-2/4">
         <div class="select-none flex w-auto h-full justify-center items-center border border-t-0 border-r-0 border-black hover:bg-gray-100" id="door">
             Door
@@ -24,7 +25,7 @@
             </svg>
             Temp
         </div>
-        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100">
+        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100" id="light">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
@@ -65,4 +66,5 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
         </svg>
     </div>
+    <div/>
 </div>

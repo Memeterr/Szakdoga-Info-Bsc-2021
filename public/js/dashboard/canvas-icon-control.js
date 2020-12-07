@@ -1,4 +1,6 @@
 $( function() {
+    $("#deviceModal").hide();
+    
 
     let countEditmode = 0;
     let countLiner = 0;
@@ -16,6 +18,10 @@ $( function() {
             if(blueprint.referenceWindowFrame.isFollowing) {
                 blueprint.referenceWindowFrame.isFollowing = false;
                 blueprint.referenceWindowFrame.addClick();
+            }
+            if(blueprint.referenceLight.isFollowing) {
+                blueprint.referenceLight.isFollowing = false;
+                blueprint.referenceLight.addClick();
             }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
@@ -45,6 +51,10 @@ $( function() {
                 blueprint.referenceDoor.isFollowing = false;
                 blueprint.referenceDoor.addClick();
             }
+            if(blueprint.referenceLight.isFollowing) {
+                blueprint.referenceLight.isFollowing = false;
+                blueprint.referenceLight.addClick();
+            }
             if(blueprint.editmode) {
                 blueprint.editmode = false;
                 countEditmode++;
@@ -65,6 +75,10 @@ $( function() {
                 blueprint.referenceDoor.isFollowing = false;
                 blueprint.referenceDoor.addClick();
             }
+            if(blueprint.referenceLight.isFollowing) {
+                blueprint.referenceLight.isFollowing = false;
+                blueprint.referenceLight.addClick();
+            }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
@@ -77,12 +91,42 @@ $( function() {
         }
         blueprint.referenceWindowFrame.addClick();
     });
+
+    // Light Button
+    $("#light").click(function(e) {
+        if(blueprint.referenceLight.clickCount % 2 == 1) {
+            blueprint.referenceLight.isFollowing = false;
+        } else {
+            blueprint.referenceLight.isFollowing = true;
+
+            // Disable other ongoing drawing functions and sync their on/off status
+            if(blueprint.referenceDoor.isFollowing) {
+                blueprint.referenceDoor.isFollowing = false;
+                blueprint.referenceDoor.addClick();
+            }
+            if(blueprint.referenceWindowFrame.isFollowing) {
+                blueprint.referenceWindowFrame.isFollowing = false;
+                blueprint.referenceWindowFrame.addClick();
+            }
+            if(blueprint.linerStatus) {
+                blueprint.linerStatus = false;
+                countLiner++;
+            }
+            if(blueprint.editmode) {
+                blueprint.editmode = false;
+                countEditmode++;
+            }
+            
+        }
+        blueprint.referenceLight.addClick();
+    });
     
     // Delete Button
     $("#delete").click(function(e) {
         blueprint.windowFrames.forEach(blueprint.deleteObject);
         blueprint.walls.forEach(blueprint.deleteObject);
         blueprint.doors.forEach(blueprint.deleteObject);
+        blueprint.lights.forEach(blueprint.deleteObject);
 
         if(blueprint.referenceWindowFrame.isFollowing) {
             blueprint.referenceWindowFrame.isFollowing = false;
@@ -91,6 +135,10 @@ $( function() {
         if(blueprint.referenceDoor.isFollowing) {
             blueprint.referenceDoor.isFollowing = false;
             blueprint.referenceDoor.addClick();
+        }
+        if(blueprint.referenceLight.isFollowing) {
+                blueprint.referenceLight.isFollowing = false;
+                blueprint.referenceLight.addClick();
         }
     });
 
@@ -109,6 +157,10 @@ $( function() {
             if(blueprint.referenceDoor.isFollowing) {
                 blueprint.referenceDoor.isFollowing = false;
                 blueprint.referenceDoor.addClick();
+            }
+            if(blueprint.referenceLight.isFollowing) {
+                blueprint.referenceLight.isFollowing = false;
+                blueprint.referenceLight.addClick();
             }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;

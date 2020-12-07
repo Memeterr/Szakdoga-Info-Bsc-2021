@@ -38,6 +38,8 @@
 @endsection
 
 @section('content')
+    <x-device-modal />
+
     <div class="flex justify-center">
         <x-canvas />
     </div>

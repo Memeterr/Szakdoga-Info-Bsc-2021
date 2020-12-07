@@ -8,6 +8,17 @@ function addDashValues() {
 	$('#form').append('<input type="hidden" name="imageSet" value="' + blueprint.imageSet + '" />');
 
 	//The timestamp value could be an id if needed
+	for(let i=0; i<blueprint.lights.length; i++) {
+		$('#form').append('<input type="hidden" name="light_' + i + '[x]" value="' + blueprint.lights[i].x + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[y]" value="' + blueprint.lights[i].y + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[isPlaced]" value="' + blueprint.lights[i].isPlaced + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[isOn]" value="' + blueprint.lights[i].isOn + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[name]" value="' + blueprint.lights[i].name + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[topics]" value="' + blueprint.lights[i].topics + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[timeStamp]" value="' + blueprint.lights[i].timeStamp + '" />');
+		$('#form').append('<input type="hidden" name="light_' + i + '[firstPlacedown]" value="' + blueprint.lights[i].firstPlacedown + '" />');
+	}
+
 	for(let i=0; i<blueprint.windowFrames.length; i++) {
 		$('#form').append('<input type="hidden" name="window_' + i + '[x]" value="' + blueprint.windowFrames[i].x + '" />');
 		$('#form').append('<input type="hidden" name="window_' + i + '[y]" value="' + blueprint.windowFrames[i].y + '" />');

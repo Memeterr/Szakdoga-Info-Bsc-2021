@@ -6,6 +6,8 @@ let blueprintTemplate = function (p) {
 	p.referenceWindowFrame = new windowFrame(30, 90, p);
 	p.referenceDoor = new door(100, 122, 50, 50, p.PI, p.PI + p.HALF_PI, p);
 
+	p.referenceLight = new Light(100, 100, p);
+
 	p.imageSet = false;
 
 	p.margin = 57;
@@ -15,10 +17,14 @@ let blueprintTemplate = function (p) {
 	p.linerStatus = false;
 	p.rubberLineOn = false;
 
+	// Drawables
 	p.doors = [];
 	p.windowFrames = [];
 	p.walls = [];
 	p.linePoints = [];
+
+	// Devices
+	p.lights = [];
 
 	p.singleDashView = false;
     if (window.location.href.indexOf("/dashboard") > -1) {
@@ -36,6 +42,7 @@ let blueprintTemplate = function (p) {
 		p.canvas = p.createCanvas(p.canvasWidth, p.canvasParams.h);
 		p.canvas.parent("#canvas_container");
 		p.background(0, 120, 194);
+		
 
 		//Upload file button, calls p.handleFile
 		//Only appears when creating a new dash
@@ -75,20 +82,24 @@ let blueprintTemplate = function (p) {
 			p.canvas.mousePressed(p.putDownWindow);
 		}
 
+		//Puts down a chosen device
+		if (p.referenceLight.isFollowing) {
+			p.canvas.mousePressed(p.putDownLight);
+		}
+
 		//Resets selected objects if selectMode turned off
 		if (p.editmode == false) {
 			p.windowFrames.forEach(p.endSelectMode);
 			p.walls.forEach(p.endSelectMode);
 			p.doors.forEach(p.endSelectMode);
 		}
-				
-		//Draw walls
-		p.walls.forEach(p.drawObject);
-		
-		//Draw windowFrames
-		p.windowFrames.forEach(p.drawObject);
+			
+		//Draw devices
+		p.lights.forEach(p.drawObject);
 
-		//Draw doors
+		//Draw objects
+		p.walls.forEach(p.drawObject);
+		p.windowFrames.forEach(p.drawObject);
 		p.doors.forEach(p.drawObject);
 
 		//WindowFrame follows mouse
@@ -108,6 +119,12 @@ let blueprintTemplate = function (p) {
 		} else if (p.referenceDoor.isFollowing == true) {
 			p.followDoor = new door(p.mouseX+(p.referenceDoor.w/4), p.mouseY+(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
 			p.followDoor.show();
+		}
+
+		//Light follows mouse
+		if (p.referenceLight.isFollowing == true) {
+			p.followLight = new Light(p.mouseX-(p.referenceLight.w/2), p.mouseY-(p.referenceLight.h/2), p);
+			p.followLight.show();
 		}
 
 		//Draw rubber lines for the walls
@@ -206,7 +223,28 @@ let blueprintTemplate = function (p) {
 		}
 	}
 
+	p.putDownLight = function () {
+		if (p.referenceLight.isFollowing == true) {
+			$("#deviceModal").show();
+			p.referenceLight.isFollowing = false;
+			blueprint.referenceLight.addClick();
+
+			p.light = new Light(p.mouseX-(p.referenceLight.w/2), p.mouseY-(p.referenceLight.h/2), p);
+			p.light.isPlaced = true;
+			p.lights.push(p.light);
+			p.light.show();
+		}
+	}
+
 	p.drawObject = function (object) {
+		if (object instanceof Light) {
+			if (object.isPlaced && object.isSelected) {
+				object.showSelected();
+			} else if (object.isPlaced) {
+				object.show();
+				object.firstPlacedown = false;
+			}
+		}
 		if (object instanceof windowFrame) {
 			if (object.isPlaced && object.isSelected) {
 				object.showSelected();
@@ -271,6 +309,15 @@ let blueprintTemplate = function (p) {
 				}
 				object.addClick();
 			}
+		} else if (object instanceof Light) {
+			if ( p.cursorOverSquare(object.x, object.y, object.w, object.h) && object.firstPlacedown == false && p.editmode) {
+				if(object.clickCount % 2 == 1) {
+					object.isSelected = false;
+				} else {
+					object.isSelected = true;
+				}
+				object.addClick();
+			}
 		}
 	}
 
@@ -285,6 +332,7 @@ let blueprintTemplate = function (p) {
 		}
 	}
 
+	//When getting data from the database
 	p.initializeWindow = function(window) {
 		if (window.isRotated) {
 			p.windowFrame = new windowFrame(parseFloat(window.x), parseFloat(window.y), p, p.referenceWindowFrame.h, p.referenceWindowFrame.w);
@@ -295,6 +343,19 @@ let blueprintTemplate = function (p) {
 			p.windowFrame.isPlaced = true;
 			p.windowFrames.push(p.windowFrame);
 		}
+	}
+
+	p.getLastDevice = function () {
+		let device = null;
+		let created = 0;
+		for (let i = 0; i < p.lights.length; i++) {
+			if (p.lights[i].timeStamp > created) {
+				created = p.lights[i].timeStamp;
+				device = p.lights[i];
+			}
+		}
+
+		return device;
 	}
 
 	p.cursorOverSquare = function (x, y, w, h) {
@@ -367,6 +428,7 @@ let blueprintTemplate = function (p) {
 		p.windowFrames.forEach(p.selectObject);
 		p.walls.forEach(p.selectObject);
 		p.doors.forEach(p.selectObject);
+		p.lights.forEach(p.selectObject);
 
 		// Draw rubber line only if clicked on canvas
 		if (p.linerStatus && p.cursorOverSquare(0, 0, p.canvasWidth, p.canvasParams.h)) {
