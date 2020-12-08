@@ -9,6 +9,7 @@ class Wall {
 
 		this.isSelected = false;
 		this.isPlaced = false;
+		this.isFollowing = false;
 
 		this.clickCount = 0;
 

@@ -3,6 +3,9 @@ let blueprintTemplate = function (p) {
 	p.bcolor = p.color(0, 120, 194);
 	p.uploadedImg = null;
 
+	p.startTime = null;
+
+	p.referenceWall = new Wall(0, 0, 0, 0, p);
 	p.referenceWindowFrame = new windowFrame(30, 90, p);
 	p.referenceDoor = new Door(100, 122, 50, 50, p.PI, p.PI + p.HALF_PI, p);
 
@@ -82,7 +85,7 @@ let blueprintTemplate = function (p) {
 			p.image(p.uploadedImg, 0, 0, p.width, p.height);
 		}
 		//p.borders();
-
+		
 		//Puts down a wall
 		if (p.linerStatus) {
 			p.putDownWall();
@@ -221,6 +224,7 @@ let blueprintTemplate = function (p) {
 
 	p.putDownWall = function () {
 		if (p.linePoints.length == 2) {
+			p.startTime = new Date();
 			if ( p.getAngle() ) {
 				p.wall = new Wall(p.linePoints[0][0], p.linePoints[0][1], p.linePoints[1][0], p.linePoints[0][1], p);
 			} else {

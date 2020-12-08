@@ -15,7 +15,4 @@ This is a project for my degree
 
 * in function selectobject() -> don't be able to select multiple objects at once
 
-* wall not getting reset when clicked on the trash icon
-	- needs a boolean which checks its status
-
 * charts button on dashboard page (show.blade.php) next to header, with name like 'charts for this dashboard'

@@ -14,6 +14,9 @@ $( function() {
         } else {
             blueprint.referenceDoor.isFollowing = true;
 
+            //Resets wall
+            blueprint.linePoints = [];
+
             // Disable other ongoing drawing functions and sync their on/off status
             if(blueprint.referenceWindowFrame.isFollowing) {
                 blueprint.referenceWindowFrame.isFollowing = false;
@@ -26,6 +29,14 @@ $( function() {
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
+                
+                let stopTime = new Date();
+                if(stopTime - blueprint.startTime < 500) {
+                    blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+                }
+                
+                //Resets wall
+                blueprint.linePoints = [];
             }
             if(blueprint.editmode) {
                 blueprint.editmode = false;
@@ -39,6 +50,12 @@ $( function() {
     $("#wall").click(function(e) {
         if(countLiner % 2 == 1) {
             blueprint.linerStatus = false;
+            blueprint.linePoints = [];
+                
+            let stopTime = new Date();
+            if(stopTime - blueprint.startTime < 500) {
+                blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+            }
         } else {
             blueprint.linerStatus = true;
 
@@ -59,6 +76,7 @@ $( function() {
                 blueprint.editmode = false;
                 countEditmode++;
             }
+
         }
         countLiner++;
     });
@@ -69,6 +87,9 @@ $( function() {
             blueprint.referenceWindowFrame.isFollowing = false;
         } else {
             blueprint.referenceWindowFrame.isFollowing = true;
+
+            //Resets wall
+            blueprint.linePoints = [];
 
             // Disable other ongoing drawing functions and sync their on/off status
             if(blueprint.referenceDoor.isFollowing) {
@@ -82,6 +103,14 @@ $( function() {
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
+                
+                let stopTime = new Date();
+                if(stopTime - blueprint.startTime < 500) {
+                    blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+                }
+                
+                //Resets wall
+                blueprint.linePoints = [];
             }
             if(blueprint.editmode) {
                 blueprint.editmode = false;
@@ -99,6 +128,9 @@ $( function() {
         } else {
             blueprint.referenceLight.isFollowing = true;
 
+            //Resets wall
+            blueprint.linePoints = [];
+
             // Disable other ongoing drawing functions and sync their on/off status
             if(blueprint.referenceDoor.isFollowing) {
                 blueprint.referenceDoor.isFollowing = false;
@@ -111,6 +143,14 @@ $( function() {
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
+                
+                let stopTime = new Date();
+                if(stopTime - blueprint.startTime < 500) {
+                    blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+                }
+                
+                //Resets wall
+                blueprint.linePoints = [];
             }
             if(blueprint.editmode) {
                 blueprint.editmode = false;
@@ -137,8 +177,20 @@ $( function() {
             blueprint.referenceDoor.addClick();
         }
         if(blueprint.referenceLight.isFollowing) {
-                blueprint.referenceLight.isFollowing = false;
-                blueprint.referenceLight.addClick();
+            blueprint.referenceLight.isFollowing = false;
+            blueprint.referenceLight.addClick();
+        }
+        if(blueprint.linerStatus) {
+            blueprint.linerStatus = false;
+            countLiner++;
+
+            let stopTime = new Date();
+            if(stopTime - blueprint.startTime < 500) {
+                blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+            }
+            
+            //Resets wall
+            blueprint.linePoints = [];
         }
     });
 
@@ -148,6 +200,9 @@ $( function() {
             blueprint.editmode = false;
         } else {
             blueprint.editmode = true;
+
+            //Resets wall
+            blueprint.linePoints = [];
 
             // Disable other ongoing drawing functions and sync their on/off status
             if(blueprint.referenceWindowFrame.isFollowing) {
@@ -165,6 +220,14 @@ $( function() {
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
+                
+                let stopTime = new Date();
+                if(stopTime - blueprint.startTime < 500) {
+                    blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+                }
+                
+                //Resets wall
+                blueprint.linePoints = [];
             }
         }
         countEditmode++;
@@ -172,6 +235,21 @@ $( function() {
 
     // Rotate Button
     $("#rotate").click(function(e) {
+        //Resets wall
+        blueprint.linePoints = [];
+        if(blueprint.linerStatus) {
+            blueprint.linerStatus = false;
+            countLiner++;
+            
+            let stopTime = new Date();
+            if(stopTime - blueprint.startTime < 500) {
+                blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+            }
+            
+            //Resets wall
+            blueprint.linePoints = [];
+        }
+
         if(countWindowframeRotate % 2 == 1) {
             blueprint.referenceWindowFrame.isRotated = false;
         } else {
