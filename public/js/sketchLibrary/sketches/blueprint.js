@@ -4,7 +4,7 @@ let blueprintTemplate = function (p) {
 	p.uploadedImg = null;
 
 	p.referenceWindowFrame = new windowFrame(30, 90, p);
-	p.referenceDoor = new door(100, 122, 50, 50, p.PI, p.PI + p.HALF_PI, p);
+	p.referenceDoor = new Door(100, 122, 50, 50, p.PI, p.PI + p.HALF_PI, p);
 
 	p.referenceLight = new Light(100, 100, p);
 
@@ -58,6 +58,12 @@ let blueprintTemplate = function (p) {
 		//Initialize the objects if there's any
 		if (windows?.length) {
 			windows.forEach(p.initializeWindow);
+		}
+		if (doors?.length) {
+			doors.forEach(p.initializeDoor);
+		}
+		if (walls?.length) {
+			walls.forEach(p.initializeWall);
 		}
 		//Initialize the devices if there's any
 		if (lights?.length) {
@@ -121,10 +127,10 @@ let blueprintTemplate = function (p) {
 		//Door follows mouse
 		if (p.referenceDoor.isFollowing == true && p.referenceDoor.isRotated == true) {
 			//TODO isRotated like clickcount (number) -> this way you can always rotate
-			p.door = new door(p.mouseX-(p.referenceDoor.w/4), p.mouseY-(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, 0, p.HALF_PI, p);
+			p.door = new Door(p.mouseX-(p.referenceDoor.w/4), p.mouseY-(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, 0, p.HALF_PI, p);
 			p.door.show();
 		} else if (p.referenceDoor.isFollowing == true) {
-			p.followDoor = new door(p.mouseX+(p.referenceDoor.w/4), p.mouseY+(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
+			p.followDoor = new Door(p.mouseX+(p.referenceDoor.w/4), p.mouseY+(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
 			p.followDoor.show();
 		}
 
@@ -200,13 +206,13 @@ let blueprintTemplate = function (p) {
 	p.putDownDoor = function() {
 		if (p.referenceDoor.isFollowing == true && p.referenceDoor.isRotated == true) {
 			//TODO isRotated like clickcount (number) -> this way you can always rotate (fully 360 degrees)
-			p.door = new door(p.mouseX-(p.referenceDoor.w/4), p.mouseY-(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, 0, p.HALF_PI, p);
+			p.door = new Door(p.mouseX-(p.referenceDoor.w/4), p.mouseY-(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, 0, p.HALF_PI, p);
 			p.door.isPlaced = true;
 			p.door.isRotated = true;
 			p.doors.push(p.door);
 			p.door.show();
 		} else if (p.referenceDoor.isFollowing == true) {
-			p.door = new door(p.mouseX+(p.referenceDoor.w/4), p.mouseY+(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
+			p.door = new Door(p.mouseX+(p.referenceDoor.w/4), p.mouseY+(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
 			p.door.isPlaced = true;
 			p.doors.push(p.door);
 			p.door.show();
@@ -216,9 +222,9 @@ let blueprintTemplate = function (p) {
 	p.putDownWall = function () {
 		if (p.linePoints.length == 2) {
 			if ( p.getAngle() ) {
-				p.wall = new wall(p.linePoints[0][0], p.linePoints[0][1], p.linePoints[1][0], p.linePoints[0][1], p);
+				p.wall = new Wall(p.linePoints[0][0], p.linePoints[0][1], p.linePoints[1][0], p.linePoints[0][1], p);
 			} else {
-				p.wall = new wall(p.linePoints[0][0], p.linePoints[0][1], p.linePoints[0][0], p.linePoints[1][1], p);
+				p.wall = new Wall(p.linePoints[0][0], p.linePoints[0][1], p.linePoints[0][0], p.linePoints[1][1], p);
 			}
 			
 			//p.wall = new wall(p.linePoints[p.linePoints.length-1][0], p.linePoints[p.linePoints.length-1][1], p.linePoints[0][0], p.linePoints[0][1], p);
@@ -260,7 +266,7 @@ let blueprintTemplate = function (p) {
 				object.firstPlacedown = false;
 			}
 		}
-		if (object instanceof wall) {
+		if (object instanceof Wall) {
 			if (object.isPlaced && object.isSelected) {
 				object.showSelected();
 			} else if (object.isPlaced) {
@@ -268,7 +274,7 @@ let blueprintTemplate = function (p) {
 				object.firstPlacedown = false;
 			}
 		}
-		if (object instanceof door) {
+		if (object instanceof Door) {
 			if (object.isPlaced && object.isSelected) {
 				object.showSelected();
 			} else if (object.isPlaced) {
@@ -289,7 +295,7 @@ let blueprintTemplate = function (p) {
 				}
 				object.addClick();
 			}
-		} else if ( object instanceof door && object.isRotated ) {
+		} else if ( object instanceof Door && object.isRotated ) {
 			if ( p.cursorOverSquare(object.x, object.y, object.w/2, object.h/2) && object.firstPlacedown == false && p.editmode) {
 				if(object.clickCount % 2 == 1) {
 					object.isSelected = false;
@@ -298,7 +304,7 @@ let blueprintTemplate = function (p) {
 				}
 				object.addClick();
 			}
-		} else if ( object instanceof door ) {
+		} else if ( object instanceof Door ) {
 			if ( p.cursorOverSquare(object.x-object.w/2, object.y-object.h/2, object.w/2, object.h/2) && object.firstPlacedown == false && p.editmode) {
 				if(object.clickCount % 2 == 1) {
 					object.isSelected = false;
@@ -307,7 +313,7 @@ let blueprintTemplate = function (p) {
 				}
 				object.addClick();
 			}
-		} else if (object instanceof wall) {
+		} else if (object instanceof Wall) {
 			if ( p.cursorOverLine(object.x1, object.y1, object.x2, object.y2) && p.editmode) {
 				if(object.clickCount % 2 == 1) {
 					object.isSelected = false;
@@ -349,6 +355,24 @@ let blueprintTemplate = function (p) {
 			p.windowFrame = new windowFrame(parseFloat(window.x), parseFloat(window.y), p, p.referenceWindowFrame.w, p.referenceWindowFrame.h);
 			p.windowFrame.isPlaced = true;
 			p.windowFrames.push(p.windowFrame);
+		}
+	}
+
+	p.initializeWall = function(wall) {
+		p.wall = new Wall(parseFloat(wall.x1), parseFloat(wall.y1), parseFloat(wall.x2), parseFloat(wall.y2), p);
+		p.wall.isPlaced = true;
+		p.walls.push(p.wall);
+	}
+
+	p.initializeDoor = function(door) {
+		if (door.isRotated) {
+			p.door = new Door(parseFloat(door.x), parseFloat(door.y), p.referenceDoor.w, p.referenceDoor.h, 0, p.HALF_PI, p);
+			p.door.isPlaced = true;
+			p.doors.push(p.door);
+		} else {
+			p.door = new Door(parseFloat(door.x), parseFloat(door.y), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
+			p.door.isPlaced = true;
+			p.doors.push(p.door);
 		}
 	}
 

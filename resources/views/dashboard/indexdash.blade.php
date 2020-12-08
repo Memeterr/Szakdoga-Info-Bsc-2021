@@ -7,7 +7,7 @@
 @section('content')
     <div class="flex justify-center">
         <!-- class="w-full" - for div to fully cover screen width  -->
-        <div class="w-8/12 bg-white p-6 rounded-lg">
+        <div class="w-8/12 bg-white p-6 rounded-lg mb-4">
             @if ($dashboards->count())
             	@foreach ($dashboards as $dashboard)
             		<div class="mb-4">
@@ -19,7 +19,8 @@
         			 		<p>Template: Custom</p>
         			 	@endif
   
-            			<p>Drawables: {{ $dashboard->windows->count() }}</p>
+            			<p>Drawables: {{ $dashboard->windows->count()+$dashboard->walls->count()+$dashboard->doors->count() }}</p>
+
             			<p>Devices: {{ $dashboard->lights->count() }}</p>
 
             			<div>

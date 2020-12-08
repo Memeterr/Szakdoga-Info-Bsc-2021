@@ -22,7 +22,16 @@ class Dashboard extends Model
         return $this->hasMany(CanvasWindow::class);
     }
 
+    public function doors() {
+        return $this->hasMany(CanvasDoor::class);
+    }
+
+    public function walls() {
+        return $this->hasMany(CanvasWall::class);
+    }
+
     public function lights() {
         return $this->hasMany(Light::class);
     }
+
 }

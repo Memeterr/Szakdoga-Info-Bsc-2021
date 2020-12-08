@@ -2,6 +2,8 @@
 
 <script type="text/javascript">
     const windows = [];
+    const doors = [];
+    const walls = [];
     const lights = [];
 </script>
 

@@ -1,4 +1,4 @@
-class door {
+class Door {
 
 	constructor(x, y, w, h, start, stop, p5) {
 		this.x = x;

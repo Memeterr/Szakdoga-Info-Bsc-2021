@@ -6,11 +6,14 @@
 
 <script type="text/javascript">
 	const windows = @json($windows);
+    const doors = @json($doors);
+	const walls = @json($walls);
+
 	const lights = @json($lights);
 </script>
 
 @section('scripts')
-    
+
     <x-canvas-scripts />
     
 @endsection

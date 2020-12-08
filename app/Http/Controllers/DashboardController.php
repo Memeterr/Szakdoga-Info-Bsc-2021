@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\CanvasWindow;
+use App\Models\CanvasDoor;
+use App\Models\CanvasWall;
 use App\Models\Dashboard;
 use App\Models\User;
 use App\Models\Light;
@@ -38,12 +40,16 @@ class DashboardController extends Controller
 
     public function show(Dashboard $dashboard) {
         $windows = CanvasWindow::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
+        $doors = CanvasDoor::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
+        $walls = CanvasWall::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
 
         $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
 
         return view('dashboard.show', [
             'dashboard' => $dashboard,
             'windows' => $windows,
+            'doors' => $doors,
+            'walls' => $walls,
             'lights' => $lights
         ]);
     }
@@ -77,6 +83,24 @@ class DashboardController extends Controller
                     'isPlaced' => $value['isPlaced'],
                     'isRotated' => $value['isRotated'],
                     'firstPlacedown' => $value['firstPlacedown'],
+                ]);
+            }
+            if( Str::contains($key , 'door') ) {
+                CanvasDoor::create([
+                    'dashboard_id' => $dash_id,
+                    'x' => $value['x'],
+                    'y' => $value['y'],
+                    'isRotated' => $value['isRotated'],
+                ]);
+            }
+            if( Str::contains($key , 'wall') ) {
+                CanvasWall::create([
+                    'dashboard_id' => $dash_id,
+                    'x1' => $value['x1'],
+                    'y1' => $value['y1'],
+                    'x2' => $value['x2'],
+                    'y2' => $value['y2'],
+                    'isPlaced' => $value['isPlaced'],
                 ]);
             }
             if( Str::contains($key , 'light') ) {
