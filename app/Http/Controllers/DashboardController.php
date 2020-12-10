@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\CanvasWindow;
 use App\Models\CanvasDoor;
@@ -11,6 +12,7 @@ use App\Models\CanvasWall;
 use App\Models\Dashboard;
 use App\Models\User;
 use App\Models\Light;
+
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -45,6 +47,8 @@ class DashboardController extends Controller
 
         $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
 
+        //$devices = DB::connection('mongodb')->collection('devices')->where('name', "=" ,'test')->get();
+
         return view('dashboard.show', [
             'dashboard' => $dashboard,
             'windows' => $windows,
@@ -58,6 +62,7 @@ class DashboardController extends Controller
     {
         //dd($request);
 
+        // Validate field
         $this->validate($request, [
             'dashname' => 'nullable|max:50',
         ]);
@@ -74,6 +79,7 @@ class DashboardController extends Controller
         ]);
         $dash_id = Dashboard::latest()->first()->id;
 
+        // Store devices to pgsql (default db)
         foreach ($request->all() as $key => $value) {
             if( Str::contains($key , 'window') ) {
                 CanvasWindow::create([
@@ -104,15 +110,33 @@ class DashboardController extends Controller
                 ]);
             }
             if( Str::contains($key , 'light') ) {
+                // TODO insert into mongoDB
+                $topics = explode(",", $request->light_0['topics']);
+                $topic1 = explode(":", $topics[0]);
+                $topic2 = explode(":", $topics[1]);
+                $pwd = Hash::make($value['pwd']);
+
+                // pgsql
                 Light::create([
                     'user_id' => $request->user()->id,
                     'dashboard_id' => $dash_id,
                     'x' => $value['x'],
                     'y' => $value['y'],
                     'name' => $value['name'],
-                    'password' => Hash::make($value['pwd']),
+                    'password' => $pwd,
                     'topics' => $value['topics'],
                     'on' => $value['isOn'],
+                ]);
+                // mongodb
+                $devices = DB::connection('mongodb')->collection('devices')->insert([
+                    'name' => $value['name'],
+                    'type' => 'light',
+                    'password' => $pwd,
+                    'topics' => [
+                        $topic1[0] => $topic1[1],
+                        $topic2[0] => $topic2[1],
+                    ],
+                    'superuser' => false,
                 ]);
             }
         }

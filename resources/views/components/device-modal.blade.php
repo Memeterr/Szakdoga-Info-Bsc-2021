@@ -17,7 +17,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+          <div class="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
             <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
               Create device
             </h3>
@@ -37,9 +37,14 @@
                 <p id="devicePwdError" class="hidden text-sm pl-1 text-red-700">Device password must be set!</p>
             </div>
             <div class="mt-2">
-              <label for="topics" class="sr-only">Topics</label>
-                <input id="topicInput" type="text" name="topics" id="topics" placeholder="Topics" class="bg-gray-100 border-2 w-full p-1 rounded-lg"value="">
-                <p id="topicsError" class="hidden text-sm pl-1 text-red-700">A topic must be set!</p>
+              <div class="flex flex-row">
+                <label for="topics" class="sr-only">Topics</label>
+                <input id="topicInput" type="text" name="topics" id="topics" placeholder="Topics" class="bg-gray-100 border-2 w-full p-1 rounded-lg" value="">
+                <button onclick="generateTopics()" type="button" class="justify-center ml-2 rounded-md border border-gray-300 shadow-sm bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                  Generate topics</button>
+              </div>
+
+                <p id="topicsError" class="hidden text-sm pl-1 text-red-700">A topic must be set or generated!</p>
             </div>
           </div>
         </div>

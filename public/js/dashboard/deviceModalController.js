@@ -29,7 +29,7 @@ function validateParams() {
 		let lastDevice = blueprint.getLastDevice();
 		lastDevice.name = deviceName;
 		lastDevice.password = devicePwd;
-		lastDevice.topics = topics;
+		lastDevice.topics = generateTopics();
 
 		$("#deviceNameInput").val("");
 		$("#devicePwdInput").val("");
@@ -72,4 +72,28 @@ function validTopic(topics) {
 		}
 	}
 	return true;
+}
+
+function generateTopics() {
+	const name = $("#deviceNameInput").val();
+	let type;
+
+	let generatedPrettyString;
+	let generatedString;
+
+	if (blueprint.getLastDevice() instanceof Light) {
+		type = "light";
+	}
+
+	if (name === "" || name === undefined) {
+		generatedPrettyString = "{ \"public/#\" : \"r\" }";
+		generatedString = "public/#:r";
+	} else {
+		generatedPrettyString = "{ \"public/#\" : \"r\", \"/device/" + type + "/" + name + "\" : \"rw\" }";
+		generatedString = "public/#:r,/device/" + type + "/" + name + ":rw";
+	}
+
+	$("#topicInput").val(generatedPrettyString);
+
+	return generatedString;
 }
