@@ -25,6 +25,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/dashboard/{dashboard:id}', [DashboardController::class, 'show'])->name('dashboard.show');
 Route::delete('/dashboard/{dashboard}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
+Route::delete('/dashboard/{dashboard}/delete', [DashboardController::class, 'destroyInView'])->name('dashboard.destroyInView');
+Route::put('/dashboard/{dashboard}/update', [DashboardController::class, 'update'])->name('dashboard.update');
+
 Route::get('/newdashboard', [DashboardController::class, 'index_newdash'])->name('dashboard_create');
 Route::post('/newdashboard', [DashboardController::class, 'store']);
 

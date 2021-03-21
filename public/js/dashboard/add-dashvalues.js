@@ -3,6 +3,105 @@ $(function () {
 	//$('#form').append('<input type="hidden" name="imageSet" value="' + blueprint.imageSet + 't" />');
 	//$('#form').append('<input type="hidden" name="devicename[x-coor]" value="10" />');
 });
+
+function updateDashValues() {
+
+	//Adds deleted items
+	if(blueprint.deletedOldItems.length > 0) {
+		for(let i=0; i<blueprint.deletedOldItems.length; i++) {
+			if(blueprint.deletedOldItems[i] instanceof windowFrame) {
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][id]" value="' + blueprint.deletedOldItems[i].id + '" />');
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][x]" value="' + blueprint.deletedOldItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][y]" value="' + blueprint.deletedOldItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][isPlaced]" value="' + blueprint.deletedOldItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][isRotated]" value="' + blueprint.deletedOldItems[i].isRotated + '" />');
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="deleted[window_' + i + '][firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
+			}
+			if(blueprint.deletedOldItems[i] instanceof Wall) {
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][id]" value="' + blueprint.deletedOldItems[i].id + '" />');
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][x1]" value="' + blueprint.deletedOldItems[i].x1 + '" />');
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][y1]" value="' + blueprint.deletedOldItems[i].y1 + '" />');
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][x2]" value="' + blueprint.deletedOldItems[i].x2 + '" />');
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][y2]" value="' + blueprint.deletedOldItems[i].y2 + '" />');
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][isPlaced]" value="' + blueprint.deletedOldItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="deleted[wall_' + i + '][timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
+			}
+			if(blueprint.deletedOldItems[i] instanceof Door) {
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][id]" value="' + blueprint.deletedOldItems[i].id + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][x]" value="' + blueprint.deletedOldItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][y]" value="' + blueprint.deletedOldItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][w]" value="' + blueprint.deletedOldItems[i].w + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][h]" value="' + blueprint.deletedOldItems[i].h + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][start]" value="' + blueprint.deletedOldItems[i].start + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][stop]" value="' + blueprint.deletedOldItems[i].stop + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][isPlaced]" value="' + blueprint.deletedOldItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][isRotated]" value="' + blueprint.deletedOldItems[i].isRotated + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="deleted[door_' + i + '][firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
+			}
+			if(blueprint.deletedOldItems[i] instanceof Light) {
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][id]" value="' + blueprint.deletedOldItems[i].id + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][x]" value="' + blueprint.deletedOldItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][y]" value="' + blueprint.deletedOldItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][isPlaced]" value="' + blueprint.deletedOldItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][isOn]" value="' + blueprint.deletedOldItems[i].isOn + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][name]" value="' + blueprint.deletedOldItems[i].name + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][pwd]" value="' + blueprint.deletedOldItems[i].password + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][topics]" value="' + blueprint.deletedOldItems[i].topics + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
+			}
+		}
+	}
+
+	//Adds new items
+	if(blueprint.newItems.length > 0) {
+		for(let i=0; i<blueprint.newItems.length; i++) {
+			if(blueprint.newItems[i] instanceof windowFrame) {
+				$('#form').append('<input type="hidden" name="new[window_' + i + '][x]" value="' + blueprint.newItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="new[window_' + i + '][y]" value="' + blueprint.newItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="new[window_' + i + '][isPlaced]" value="' + blueprint.newItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="new[window_' + i + '][isRotated]" value="' + blueprint.newItems[i].isRotated + '" />');
+				$('#form').append('<input type="hidden" name="new[window_' + i + '][timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="new[window_' + i + '][firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
+			}
+			if(blueprint.newItems[i] instanceof Wall) {
+				$('#form').append('<input type="hidden" name="new[wall_' + i + '][x1]" value="' + blueprint.newItems[i].x1 + '" />');
+				$('#form').append('<input type="hidden" name="new[wall_' + i + '][y1]" value="' + blueprint.newItems[i].y1 + '" />');
+				$('#form').append('<input type="hidden" name="new[wall_' + i + '][x2]" value="' + blueprint.newItems[i].x2 + '" />');
+				$('#form').append('<input type="hidden" name="new[wall_' + i + '][y2]" value="' + blueprint.newItems[i].y2 + '" />');
+				$('#form').append('<input type="hidden" name="new[wall_' + i + '][isPlaced]" value="' + blueprint.newItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="new[wall_' + i + '][timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
+			}
+			if(blueprint.newItems[i] instanceof Door) {
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][x]" value="' + blueprint.newItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][y]" value="' + blueprint.newItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][w]" value="' + blueprint.newItems[i].w + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][h]" value="' + blueprint.newItems[i].h + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][start]" value="' + blueprint.newItems[i].start + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][stop]" value="' + blueprint.newItems[i].stop + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][isPlaced]" value="' + blueprint.newItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][isRotated]" value="' + blueprint.newItems[i].isRotated + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="new[door_' + i + '][firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
+			}
+			if(blueprint.newItems[i] instanceof Light) {
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][x]" value="' + blueprint.newItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][y]" value="' + blueprint.newItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][isPlaced]" value="' + blueprint.newItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][isOn]" value="' + blueprint.newItems[i].isOn + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][name]" value="' + blueprint.newItems[i].name + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][pwd]" value="' + blueprint.newItems[i].password + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][topics]" value="' + blueprint.newItems[i].topics + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="new[light_' + i + '][firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
+			}
+		}
+	}
+
+}
+
 //For data which could change, use a button's onclick attribute
 function addDashValues() {
 	$('#form').append('<input type="hidden" name="imageSet" value="' + blueprint.imageSet + '" />');

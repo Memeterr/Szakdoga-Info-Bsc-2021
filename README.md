@@ -11,6 +11,7 @@ Run these commands in the cloned/downloaded repo:
 * copy .env.example and rename it to .env
 * create a database
 * in .env file set up the database connection
+* php artisan key:generate
 * php artisan config:cache
 * php artisan migrate
 
@@ -24,6 +25,12 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## TODO
 
+* establish connection with mqtt
+	- if not possible with local broker, use a free cloud broker
+
+* when adding new device, the type should be selectable (maybe a button for each one?)
+	- these are predefined, so the user can't set their own type
+
 * devices need an id for a dashboard in mongoDB
 
 * at create device modal generate default topics, just like at the iotgateway
@@ -33,19 +40,19 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 * refresh migrations and do windows and walls db layout as doors
 
-* delete button on show.blade.php -> deletes that dashboard
-
-* save changes button on show.blade.php -> updates that dashboard
-	- deletes deleted objects from db
-	- adds new ones to db
-
 * livewire to generate topics on device modal
 
+* dashboardController should be 2 seperate controller
+	- for better readability
+
 ## BUG
+
+* GET https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg net::ERR_CONNECTION_TIMED_OUT
+	- get maybe a new logo
 
 * you can generate topics without name, then set a name, and create a device without proper topics
 
 * device name on canvas could disappear at the sides, needs optimizing
 	- needs a max length check, maybe 15 characters?
 
-* in function selectobject() -> don't be able to select multiple objects at once
+* canvas: in function selectobject() -> don't be able to select multiple objects at once

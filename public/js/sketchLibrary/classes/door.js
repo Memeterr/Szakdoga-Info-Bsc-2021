@@ -15,6 +15,8 @@ class Door {
 		this.isRotated = false;
 		this.firstPlacedown = true;
 
+		this.id = null;
+
 		this.clickCount = 0;
 
 		this.timeStamp = Date.now();

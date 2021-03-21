@@ -11,6 +11,8 @@ class Wall {
 		this.isPlaced = false;
 		this.isFollowing = false;
 
+		this.id = null;
+
 		this.clickCount = 0;
 
 		this.timeStamp = Date.now();

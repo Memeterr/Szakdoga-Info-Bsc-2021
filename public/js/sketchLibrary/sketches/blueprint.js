@@ -20,6 +20,11 @@ let blueprintTemplate = function (p) {
 	p.linerStatus = false;
 	p.rubberLineOn = false;
 
+	// For database changes
+	p.newItems = [];
+	p.oldItems = [];
+	p.deletedOldItems = [];
+
 	// Drawables
 	p.doors = [];
 	p.windowFrames = [];
@@ -195,12 +200,14 @@ let blueprintTemplate = function (p) {
 					p.windowFrame.isPlaced = true;
 					p.windowFrame.isRotated = true;
 					p.windowFrames.push(p.windowFrame);
+					p.newItems.push(p.windowFrame);
 					p.windowFrame.show();
 					break windowFrameIsRotated;
 				}
 				p.windowFrame = new windowFrame(p.mouseX-(p.referenceWindowFrame.w/2), p.mouseY-(p.referenceWindowFrame.h/2), p);
 				p.windowFrame.isPlaced = true;
 				p.windowFrames.push(p.windowFrame);
+				p.newItems.push(p.windowFrame);
 				p.windowFrame.show();
 			}
 		}
@@ -213,11 +220,13 @@ let blueprintTemplate = function (p) {
 			p.door.isPlaced = true;
 			p.door.isRotated = true;
 			p.doors.push(p.door);
+			p.newItems.push(p.door);
 			p.door.show();
 		} else if (p.referenceDoor.isFollowing == true) {
 			p.door = new Door(p.mouseX+(p.referenceDoor.w/4), p.mouseY+(p.referenceDoor.h/4), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
 			p.door.isPlaced = true;
 			p.doors.push(p.door);
+			p.newItems.push(p.door);
 			p.door.show();
 		}
 	}
@@ -234,6 +243,7 @@ let blueprintTemplate = function (p) {
 			//p.wall = new wall(p.linePoints[p.linePoints.length-1][0], p.linePoints[p.linePoints.length-1][1], p.linePoints[0][0], p.linePoints[0][1], p);
 			p.wall.isPlaced = true;
 			p.walls.push(p.wall);
+			p.newItems.push(p.wall);
 			p.wall.show();
 
 			p.linePoints = [];
@@ -249,6 +259,7 @@ let blueprintTemplate = function (p) {
 			p.light = new Light(p.mouseX-(p.referenceLight.w/2), p.mouseY-(p.referenceLight.h/2), p);
 			p.light.isPlaced = true;
 			p.lights.push(p.light);
+			p.newItems.push(p.light);
 			p.light.show();
 		}
 	}
@@ -344,6 +355,14 @@ let blueprintTemplate = function (p) {
 
 	p.deleteObject = function (object) {
 		if (object.isSelected) {
+			if(p.oldItems.includes(object) && !p.deletedOldItems.includes(object)) {
+				p.deletedOldItems.push(object);
+			}
+			if(p.newItems.includes(object)) {
+				const index = p.newItems.indexOf(object);
+				p.newItems.splice(index, 1);
+			}
+
 			object.isPlaced = false;
 			object = null;
 		}
@@ -354,29 +373,39 @@ let blueprintTemplate = function (p) {
 		if (window.isRotated) {
 			p.windowFrame = new windowFrame(parseFloat(window.x), parseFloat(window.y), p, p.referenceWindowFrame.h, p.referenceWindowFrame.w);
 			p.windowFrame.isPlaced = true;
+			p.windowFrame.id = window.id;
 			p.windowFrames.push(p.windowFrame);
+			p.oldItems.push(p.windowFrame);
 		} else {
 			p.windowFrame = new windowFrame(parseFloat(window.x), parseFloat(window.y), p, p.referenceWindowFrame.w, p.referenceWindowFrame.h);
 			p.windowFrame.isPlaced = true;
+			p.windowFrame.id = window.id;
 			p.windowFrames.push(p.windowFrame);
+			p.oldItems.push(p.windowFrame);
 		}
 	}
 
 	p.initializeWall = function(wall) {
 		p.wall = new Wall(parseFloat(wall.x1), parseFloat(wall.y1), parseFloat(wall.x2), parseFloat(wall.y2), p);
 		p.wall.isPlaced = true;
+		p.wall.id = wall.id;
 		p.walls.push(p.wall);
+		p.oldItems.push(p.wall);
 	}
 
 	p.initializeDoor = function(door) {
 		if (door.isRotated) {
 			p.door = new Door(parseFloat(door.x), parseFloat(door.y), p.referenceDoor.w, p.referenceDoor.h, 0, p.HALF_PI, p);
 			p.door.isPlaced = true;
+			p.door.id = door.id;
 			p.doors.push(p.door);
+			p.oldItems.push(p.door);
 		} else {
 			p.door = new Door(parseFloat(door.x), parseFloat(door.y), p.referenceDoor.w, p.referenceDoor.h, p.referenceDoor.start, p.referenceDoor.stop, p);
 			p.door.isPlaced = true;
+			p.door.id = door.id;
 			p.doors.push(p.door);
+			p.oldItems.push(p.door);
 		}
 	}
 
@@ -387,7 +416,9 @@ let blueprintTemplate = function (p) {
 		p.light.password = light.password;
 		p.light.isOn = light.on;
 		p.light.isPlaced = true;
+		p.light.id = light.id;
 		p.lights.push(p.light);
+		p.oldItems.push(p.light);
 	}
 
 	p.getLastDevice = function () {
