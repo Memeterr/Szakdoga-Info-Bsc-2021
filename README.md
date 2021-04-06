@@ -25,6 +25,8 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## TODO
 
+* kép tárolása, ha azt töltenek fel
+
 * establish connection with mqtt
 	- if not possible with local broker, use a free cloud broker
 

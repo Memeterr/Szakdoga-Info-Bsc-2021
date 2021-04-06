@@ -17,6 +17,7 @@ class CreateDashboardsTable extends Migration
             $table->id();
             $table->string('name', 50);
             $table->boolean('imageSet');
+            $table->string('imagePath')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

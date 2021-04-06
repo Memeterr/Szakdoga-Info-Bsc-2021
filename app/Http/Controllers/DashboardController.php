@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\File;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\CanvasWindow;
 use App\Models\CanvasDoor;
@@ -35,23 +38,27 @@ class DashboardController extends Controller
         ]);
     }
 
-    //need new controller /this maybe not/
+    //needs new controller /this maybe not/
     public function index_newdash()
     {
         return view('dashboard.createdash');
     }
 
-    //need new controller
+    //needs new controller
     public function show(Dashboard $dashboard) {
+        //dd($dashboard);
         $windows = CanvasWindow::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
         $doors = CanvasDoor::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
         $walls = CanvasWall::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
 
         $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
 
+        $url = Storage::url($dashboard->imagePath);
+
         //$devices = DB::connection('mongodb')->collection('devices')->where('name', "=" ,'test')->get();
 
         return view('dashboard.show', [
+            'url' => $url,
             'dashboard' => $dashboard,
             'windows' => $windows,
             'doors' => $doors,
@@ -63,12 +70,18 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         //dd($request);
+        $path = null;
 
         // Validate field
         $this->validate($request, [
             'dashname' => 'nullable|max:50',
+            'imageInput' => 'nullable|image|mimetypes:image/jpeg,image/jpg,image/png',
         ]);
 
+        if ($request->file('imageInput') != null) {
+            $path = Storage::putFile('public/dashimages', $request->file('imageInput'), 'public');
+        }
+        
         if( $request->dashname == null || $request->dashname == "" ) {
             $dashname = "Default-" . now()->toDateTimeString();
         } else {
@@ -77,7 +90,8 @@ class DashboardController extends Controller
 
         $request->user()->dashboards()->create([
             'name' => $dashname,
-            'imageSet' => $request->imageSet
+            'imageSet' => $request->imageSet,
+            'imagePath' => $path,
         ]);
         $dash_id = Dashboard::latest()->first()->id;
 

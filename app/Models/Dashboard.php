@@ -11,7 +11,8 @@ class Dashboard extends Model
 
     protected $fillable = [
     	'name',
-        'imageSet'
+        'imageSet',
+        'imagePath'
     ];
 
     public function user() {

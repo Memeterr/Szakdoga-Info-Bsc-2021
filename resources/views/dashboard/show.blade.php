@@ -10,6 +10,8 @@
 	const walls = @json($walls);
 
 	const lights = @json($lights);
+
+    const imgurl = @json($url);
 </script>
 
 @section('scripts')
@@ -22,7 +24,9 @@
 
 @section('header_menus')
 	<div class="ml-10 flex flex-row">
-		
+        @if ($url != '/storage/')
+		<img src="{{ $url }}" style="display: none;">
+        @endif
 
         <a href="{{ route('charts') }}" class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
             Charts for this dashboard</a>

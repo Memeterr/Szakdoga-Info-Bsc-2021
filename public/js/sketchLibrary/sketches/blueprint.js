@@ -2,6 +2,7 @@ let blueprintTemplate = function (p) {
 	p.canvasParams = {w:800, h:500};
 	p.bcolor = p.color(0, 120, 194);
 	p.uploadedImg = null;
+	p.backgroundImgLoaded = false;
 
 	p.startTime = null;
 
@@ -54,13 +55,21 @@ let blueprintTemplate = function (p) {
 		//Images
 		p.lightOffImg = p.loadImage('../js/sketchLibrary/assets/lightOff.png');
 		p.lightOnImg = p.loadImage('../js/sketchLibrary/assets/lightOn.png');
+		if(imgurl != null && imgurl != '' && imgurl != '/storage/') {
+			p.backgroundImg = p.loadImage(imgurl);
+			p.backgroundImgLoaded = true;
+		}
 
 		//Upload file button, calls p.handleFile
 		//Only appears when creating a new dash
 		if (!p.singleDashView) {
 			p.fileInput = p.createFileInput(p.handleFile);
 			p.fileInput.style('cursor', 'pointer');
-			p.fileInput.parent("#header");
+			p.fileInput.parent("#form");
+			p.fileInput.id("imageInput");
+			p.fileInput.attribute('name', "imageInput");
+			p.fileInput.attribute('accept', "image/png, image/jpeg");
+			//p.fileInput.center('vertical');
 		}
 
 		//Initialize the objects if there's any
@@ -88,6 +97,9 @@ let blueprintTemplate = function (p) {
 		p.background(p.bcolor);
 		if(p.uploadedImg) {
 			p.image(p.uploadedImg, 0, 0, p.width, p.height);
+		}
+		if(p.backgroundImgLoaded) {
+			p.image(p.backgroundImg, 0, 0, p.width, p.height);
 		}
 		//p.borders();
 		
@@ -480,7 +492,7 @@ let blueprintTemplate = function (p) {
 	}
 
 	p.handleFile = function(file) {
-		console.log(file);
+		//console.log(file);
 		if (file.type === 'image') {
 			p.uploadedImg = p.createImg(file.data, '');
 			p.uploadedImg.hide();

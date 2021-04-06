@@ -1,7 +1,9 @@
-console.log('mqtt loaded');
 // Create a client instance
 let clientID = "web" + new Date().getTime();
-client = new Paho.MQTT.Client('localhost', Number(9001), clientID);
+//client = new Paho.MQTT.Client('localhost', Number(9001), clientID);
+
+// WORKS
+client = new Paho.MQTT.Client('test.mosquitto.org', Number(8081), clientID); 
 
 // set callback handlers
 client.onConnectionLost = onConnectionLost;
@@ -16,18 +18,16 @@ client.connect({
 });
 
 function doFail(err) {
-	console.log(err.errorMessage);
-	console.log(err.errorCode);
-	console.log(err.message);
+	console.log("Connection failed with: " + err.errorMessage + ", code: " + err.errorCode);
 }
 
 // called when the client connects
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
-  client.subscribe("World");
+  client.subscribe("#");
   message = new Paho.MQTT.Message("Hello");
-  message.destinationName = "World";
+  message.destinationName = "#";
   client.send(message);
 }
 
