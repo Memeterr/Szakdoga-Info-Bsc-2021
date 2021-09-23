@@ -4,7 +4,15 @@ This is a project for my degree
 
 ## Install
 
+First you need to set up the workspace
+* install php 7.4 non-thread safe
+* enable extensions
+* install mongodb PHP extension: https://www.php.net/manual/en/mongodb.installation.windows.php
+* set up a postgresql server
+* you may need to add the postgres \bin directory to your PATH
+
 Run these commands in the cloned/downloaded repo:
+* composer require jenssegers/mongodb
 * composer install
 * npm install
 * npm run dev
@@ -25,10 +33,15 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## TODO
 
+* to be able to delete the image
+
 * kép tárolása, ha azt töltenek fel
+
+* show the canvas picture in the 'My Dashboards' menu
 
 * establish connection with mqtt
 	- if not possible with local broker, use a free cloud broker
+	- if nothing works, write a function that simulates data flow
 
 * when adding new device, the type should be selectable (maybe a button for each one?)
 	- these are predefined, so the user can't set their own type
