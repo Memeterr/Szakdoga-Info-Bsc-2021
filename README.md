@@ -22,6 +22,7 @@ Run these commands in the cloned/downloaded repo:
 * php artisan key:generate
 * php artisan config:cache
 * php artisan migrate
+* php artisan storage:link
 
 After this you can run a dev server using the following command:
 * php artisan serve
@@ -33,17 +34,11 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## TODO
 
-* to be able to delete the image
-
-* kép tárolása, ha azt töltenek fel
-
-* show the canvas picture in the 'My Dashboards' menu
-
 * establish connection with mqtt
 	- if not possible with local broker, use a free cloud broker
 	- if nothing works, write a function that simulates data flow
 
-* when adding new device, the type should be selectable (maybe a button for each one?)
+* when adding new device, the type should be selectable (maybe a button for each one?) scrollable
 	- these are predefined, so the user can't set their own type
 
 * devices need an id for a dashboard in mongoDB
@@ -55,12 +50,14 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 * refresh migrations and do windows and walls db layout as doors
 
-* livewire to generate topics on device modal
+* livewire to generate topics on device modal (or vanilla js)
+
+* be able to rename the dashboard name
 
 * dashboardController should be 2 seperate controller
 	- for better readability
 
-## BUG
+## KNOWN BUGS
 
 * GET https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg net::ERR_CONNECTION_TIMED_OUT
 	- get maybe a new logo
