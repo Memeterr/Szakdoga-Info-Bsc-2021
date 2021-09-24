@@ -51,7 +51,7 @@
 @section('content')
     <x-device-modal />
 
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-6">
         <x-canvas />
     </div>
 @endsection

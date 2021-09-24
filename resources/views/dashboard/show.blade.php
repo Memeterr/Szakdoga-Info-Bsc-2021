@@ -40,10 +40,10 @@
             Save changes</button>
         </form>
 
-        <form action="{{ route('dashboard.destroyInView', $dashboard) }}" method="post" class="flex px-3 py-2 rounded-md hover:text-white hover:bg-gray-700 mb-0">
+        <form action="{{ route('dashboard.destroyInView', $dashboard) }}" method="post" class="flex mb-0">
             @csrf
             @method('DELETE')
-            <button type="submit" class="select-none font-semibold text-base font-medium text-black-300 hover:text-white">Delete</button>
+            <button type="submit" class="px-3 py-2 select-none font-semibold text-base font-medium text-red-700 hover:text-white rounded-md hover:bg-red-700 ">Delete</button>
         </form>
         
 
@@ -51,9 +51,9 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-center">
-        
+    <x-device-modal />
+
+    <div class="flex justify-center mb-6">
         <x-canvas />
-        
     </div>
 @endsection

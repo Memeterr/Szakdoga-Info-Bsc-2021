@@ -126,7 +126,6 @@ class DashboardController extends Controller
                 ]);
             }
             if( Str::contains($key , 'light') ) {
-                // TODO insert into mongoDB
                 $topics = explode(",", $request->light_0['topics']);
                 $topic1 = explode(":", $topics[0]);
                 $topic2 = explode(":", $topics[1]);
@@ -145,7 +144,7 @@ class DashboardController extends Controller
                 ]);
                 // mongodb
                 $devices = DB::connection('mongodb')->collection('devices')->insert([
-                    'name' => $value['name'],
+                    'name' => $value['name'] . '-' . $dash_id,
                     'type' => 'light',
                     'password' => $pwd,
                     'topics' => [
@@ -162,6 +161,7 @@ class DashboardController extends Controller
 
     public function update(Dashboard $dashboard, Request $request) {
         //dd($request->deleted['door_0']['id']);
+        $dash_id = Dashboard::latest()->first()->id;
         
         if($request->deleted != null) {
             foreach ($request->deleted as $key => $value) {
@@ -180,12 +180,18 @@ class DashboardController extends Controller
                 if( Str::contains($key , 'light') ) {
                     Light::where('id', $value['id'])
                         ->delete();
+                    
+                        $name = $value['name'] . '-' . $dash_id;
+                    DB::connection('mongodb')->collection('devices')
+                        ->where('name', "=", $name)
+                        ->delete();
                 }
             }
         }
 
         if($request->new != null) {
             foreach ($request->new as $key => $value) {
+                
                 if( Str::contains($key , 'window') ) {
                     CanvasWindow::create([
                         'dashboard_id' => $dashboard->id,
@@ -215,8 +221,8 @@ class DashboardController extends Controller
                     ]);
                 }
                 if( Str::contains($key , 'light') ) {
-                    // TODO insert into mongoDB
-                    $topics = explode(",", $request->light_0['topics']);
+                    
+                    $topics = explode(",", $value['topics']);
                     $topic1 = explode(":", $topics[0]);
                     $topic2 = explode(":", $topics[1]);
                     $pwd = Hash::make($value['pwd']);
@@ -234,7 +240,7 @@ class DashboardController extends Controller
                     ]);
                     // mongodb
                     $devices = DB::connection('mongodb')->collection('devices')->insert([
-                        'name' => $value['name'],
+                        'name' => $value['name'] . '-' . $dash_id,
                         'type' => 'light',
                         'password' => $pwd,
                         'topics' => [
@@ -251,13 +257,32 @@ class DashboardController extends Controller
     }
 
     public function destroy(Dashboard $dashboard) {
-        $dashboard->delete();
+        //dd($dashboard->lights);
+        $lights = $dashboard->lights;
 
+        //Delete mongoDB devices
+        foreach ($lights as $light) {
+            DB::connection('mongodb')->collection('devices')
+                    ->where('name', '=', $light->name . '-' . $dashboard->id)
+                    ->delete();
+        }
+
+        $dashboard->delete();
+        
         return back();
     }
 
     //need new controller
     public function destroyInView(Dashboard $dashboard) {
+        $lights = $dashboard->lights;
+
+        //Delete mongoDB devices
+        foreach ($lights as $light) {
+            DB::connection('mongodb')->collection('devices')
+                    ->where('name', '=', $light->name . '-' . $dashboard->id)
+                    ->delete();
+        }
+
         $dashboard->delete();
 
         $dashboards = Dashboard::latest()

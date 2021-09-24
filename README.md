@@ -1,6 +1,6 @@
 # Info
 
-This is a project for my degree
+This is a project for my thesis
 
 ## Install
 
@@ -32,16 +32,19 @@ You can access the website at
 
 MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
+## INFO
+
+* devices stored in ongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
+
 ## TODO
 
 * establish connection with mqtt
 	- if not possible with local broker, use a free cloud broker
 	- if nothing works, write a function that simulates data flow
 
-* when adding new device, the type should be selectable (maybe a button for each one?) scrollable
-	- these are predefined, so the user can't set their own type
-
-* devices need an id for a dashboard in mongoDB
+* add new device models
+	- when adding new device, the types are predefined, so the user can't set their own type
+	- check generated topics in modal
 
 * at create device modal generate default topics, just like at the iotgateway
 	- maybe it's enough if only the object's coordinates and name are stored in pgsql, other attributes already stored in mongodb
@@ -49,8 +52,6 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 * canvas delete button decrease time interval
 
 * refresh migrations and do windows and walls db layout as doors
-
-* livewire to generate topics on device modal (or vanilla js)
 
 * be able to rename the dashboard name
 
