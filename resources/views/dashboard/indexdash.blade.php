@@ -16,7 +16,7 @@
 							@if ( $dashboard->imageSet )
 								<img class="" src="{{ Storage::url($dashboard->imagePath) }}" alt="Dashboard preview" width="135px">
 							@else
-								<img class="" src="{{ Storage::url('images/no-img.jpg') }}" alt="Dashboard preview" width="135px">
+								<img class="" src="/storage/images/no-img.jpg" alt="Dashboard preview" width="135px">
 							@endif
 							</a>
 						</div>
