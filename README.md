@@ -32,11 +32,30 @@ You can access the website at
 
 MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
-## INFO
+## IMPORTANT NOTES
 
 * devices stored in ongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
 
+* on windows it appears that Intel started using this port for some of their drivers. Bad Intel.
+	- fix:
+		- Start menu
+		- Type: Services
+		- Find the service called: Intel(R) Graphics Command Center Service
+		- Rightclick > Properties > Startup type = Disabled
+
 ## TODO
+
+* Plain WebSockets
+	- listener 8000
+	- protocol websockets
+
+* manage to connect to iotgateway through mqttx
+	- on port 1883 you can only connect to a created device - device name / password
+
+* config szte broker to support websockets
+	- iotgateway/mosquitto-auth-plugin/mosquitto/config.mk  ==>  line 72
+	- iotgateway/mosquitto-auth-plugin/mosquitto/mosquitto.conf
+		- set websocket listening port
 
 * establish connection with mqtt
 	- if not possible with local broker, use a free cloud broker
