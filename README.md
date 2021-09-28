@@ -34,28 +34,20 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## IMPORTANT NOTES
 
-* devices stored in ongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
+* As of now, the application cannot run without the installation of the SZTE iot gateway (github.com/sed-szeged/iotgateway)	
+	- to use the app, you need to start the iot gateway docker images
 
-* on windows it appears that Intel started using this port for some of their drivers. Bad Intel.
-	- fix:
-		- Start menu
-		- Type: Services
-		- Find the service called: Intel(R) Graphics Command Center Service
-		- Rightclick > Properties > Startup type = Disabled
+* I use a public broker for testing (https://test.mosquitto.org)
+	- host: ws://test.mosquitto.org:8081
+	- set a username/password before connecting
+
+* To send data to the app through the mosquitto broker, i used MQTTX
+	- host: mqtt://test.mosquitto.org:1883
+
+* Devices stored in ongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
+
 
 ## TODO
-
-* Plain WebSockets
-	- listener 8000
-	- protocol websockets
-
-* manage to connect to iotgateway through mqttx
-	- on port 1883 you can only connect to a created device - device name / password
-
-* config szte broker to support websockets
-	- iotgateway/mosquitto-auth-plugin/mosquitto/config.mk  ==>  line 72
-	- iotgateway/mosquitto-auth-plugin/mosquitto/mosquitto.conf
-		- set websocket listening port
 
 * establish connection with mqtt
 	- if not possible with local broker, use a free cloud broker
@@ -76,6 +68,32 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 * dashboardController should be 2 seperate controller
 	- for better readability
+
+
+## TODO FIX BROKER
+
+* Plain WebSockets
+	- listener 8080
+	- protocol websockets
+
+* manage to connect to iotgateway through mqttx
+	- on port 1883 you can only connect to a created device - device name / password
+
+* config szte broker to support websockets
+	- iotgateway/mosquitto-auth-plugin/mosquitto/config.mk  ==>  line 72
+	- iotgateway/mosquitto-auth-plugin/mosquitto/mosquitto.conf
+		- set websocket listening port
+		- netstat -ab
+
+* on windows it appears that Intel started using this port for some of their drivers. Bad Intel.
+	- fix:
+		- Start menu
+		- Type: Services
+		- Find the service called: Intel(R) Graphics Command Center Service
+		- Rightclick > Properties > Startup type = Disabled
+
+* let the port through the firewall
+
 
 ## KNOWN BUGS
 

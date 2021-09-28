@@ -1,6 +1,6 @@
 // Create a client instance
 let clientID = "web" + new Date().getTime();
-//client = new Paho.MQTT.Client('localhost', Number(9001), clientID);
+//client = new Paho.MQTT.Client('127.0.0.1', Number(8080), clientID);
 
 // WORKS
 client = new Paho.MQTT.Client('test.mosquitto.org', Number(8081), clientID); 
@@ -8,13 +8,14 @@ client = new Paho.MQTT.Client('test.mosquitto.org', Number(8081), clientID);
 // set callback handlers
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
+client.onMessageDelivered = onMessageDelivered;
 
 // connect the client
 client.connect({
-	onSuccess:onConnect,
+	onSuccess: onConnect,
 	onFailure: doFail,
-	userName : "iottest",
-	password : "iottest"
+	userName : "Smarthome-dmtr",
+	password : "asd123"
 });
 
 function doFail(err) {
@@ -25,10 +26,8 @@ function doFail(err) {
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
-  client.subscribe("#");
-  message = new Paho.MQTT.Message("Hello");
-  message.destinationName = "#";
-  client.send(message);
+  client.subscribe("device/#");
+  
 }
 
 // called when the client loses its connection
@@ -41,4 +40,8 @@ function onConnectionLost(responseObject) {
 // called when a message arrives
 function onMessageArrived(message) {
   console.log("onMessageArrived:"+message.payloadString);
+}
+
+function onMessageDelivered(message) {
+  console.log("onMessageDelivered:"+message.payloadString);
 }
