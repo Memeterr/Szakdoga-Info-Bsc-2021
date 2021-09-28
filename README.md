@@ -43,15 +43,15 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 * To send data to the app through the mosquitto broker, i used MQTTX
 	- host: mqtt://test.mosquitto.org:1883
+	- set a username/password before connecting
 
 * Devices stored in ongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
 
 
 ## TODO
 
-* establish connection with mqtt
-	- if not possible with local broker, use a free cloud broker
-	- if nothing works, write a function that simulates data flow
+* make seperate functions in connection.js instead of lambda
+	- to make it a little more scalable
 
 * add new device models
 	- when adding new device, the types are predefined, so the user can't set their own type
@@ -96,6 +96,8 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 
 ## KNOWN BUGS
+
+* when adding multiple iot devices they get the same topics
 
 * GET https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg net::ERR_CONNECTION_TIMED_OUT
 	- get maybe a new logo
