@@ -35,4 +35,8 @@ class Dashboard extends Model
         return $this->hasMany(Light::class);
     }
 
+    public function thermos() {
+        return $this->hasMany(Thermometer::class);
+    }
+
 }

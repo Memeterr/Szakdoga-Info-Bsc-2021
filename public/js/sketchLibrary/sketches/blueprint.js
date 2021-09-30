@@ -89,6 +89,9 @@ let blueprintTemplate = function (p) {
 		if (lights?.length) {
 			lights.forEach(p.initializeLight);
 		}
+		if (thermos?.length) {
+			thermos.forEach(p.initializeThermo);
+		}
 		
 		//p.fileInput.position(p.canvasWidth/30 - 25, p.canvasParams.h - 40);
 		//p.fileInput.position(0, 0);

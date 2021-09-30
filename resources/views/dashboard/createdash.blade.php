@@ -5,6 +5,7 @@
     const doors = [];
     const walls = [];
     const lights = [];
+    const thermos = [];
 
     const imgurl = '';
 </script>

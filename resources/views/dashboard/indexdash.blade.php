@@ -32,7 +32,7 @@
 	
 							<p>Drawables: {{ $dashboard->windows->count()+$dashboard->walls->count()+$dashboard->doors->count() }}</p>
 
-							<p>Devices: {{ $dashboard->lights->count() }}</p>
+							<p>Devices: {{ $dashboard->lights->count()+$dashboard->thermos->count() }}</p>
 
 							<div class="float-left">
 								<form action="{{ route('dashboard.destroy', $dashboard) }}" method="post">

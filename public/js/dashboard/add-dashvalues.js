@@ -52,6 +52,16 @@ function updateDashValues() {
 				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
 				$('#form').append('<input type="hidden" name="deleted[light_' + i + '][firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
 			}
+			if(blueprint.deletedOldItems[i] instanceof Thermometer) {
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[x]" value="' + blueprint.deletedOldItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[y]" value="' + blueprint.deletedOldItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[isPlaced]" value="' + blueprint.deletedOldItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[name]" value="' + blueprint.deletedOldItems[i].name + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[pwd]" value="' + blueprint.deletedOldItems[i].password + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[topics]" value="' + blueprint.deletedOldItems[i].topics + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
+			}
 		}
 	}
 
@@ -97,6 +107,16 @@ function updateDashValues() {
 				$('#form').append('<input type="hidden" name="new[light_' + i + '][timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
 				$('#form').append('<input type="hidden" name="new[light_' + i + '][firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
 			}
+			if(blueprint.newItems[i] instanceof Thermometer) {
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[x]" value="' + blueprint.newItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[y]" value="' + blueprint.newItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[isPlaced]" value="' + blueprint.newItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[name]" value="' + blueprint.newItems[i].name + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[pwd]" value="' + blueprint.newItems[i].password + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[topics]" value="' + blueprint.newItems[i].topics + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="thermo_' + i + '[firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
+			}
 		}
 	}
 
@@ -118,6 +138,19 @@ function addDashValues() {
 			$('#form').append('<input type="hidden" name="light_' + i + '[topics]" value="' + blueprint.lights[i].topics + '" />');
 			$('#form').append('<input type="hidden" name="light_' + i + '[timeStamp]" value="' + blueprint.lights[i].timeStamp + '" />');
 			$('#form').append('<input type="hidden" name="light_' + i + '[firstPlacedown]" value="' + blueprint.lights[i].firstPlacedown + '" />');
+		}
+	}
+
+	for(let i=0; i<blueprint.thermos.length; i++) {
+		if(blueprint.thermos[i].isPlaced) {
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[x]" value="' + blueprint.thermos[i].x + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[y]" value="' + blueprint.thermos[i].y + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[isPlaced]" value="' + blueprint.thermos[i].isPlaced + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[name]" value="' + blueprint.thermos[i].name + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[pwd]" value="' + blueprint.thermos[i].password + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[topics]" value="' + blueprint.thermos[i].topics + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[timeStamp]" value="' + blueprint.thermos[i].timeStamp + '" />');
+			$('#form').append('<input type="hidden" name="thermo_' + i + '[firstPlacedown]" value="' + blueprint.thermos[i].firstPlacedown + '" />');
 		}
 	}
 

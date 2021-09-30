@@ -15,6 +15,7 @@ use App\Models\CanvasWall;
 use App\Models\Dashboard;
 use App\Models\User;
 use App\Models\Light;
+use App\Models\Thermometer;
 
 use Illuminate\Http\Request;
 
@@ -32,6 +33,7 @@ class DashboardController extends Controller
             ->with('user')
             ->where('user_id', '=', auth()->user()->id)
             ->paginate(4);
+        
         
         return view('dashboard.indexdash', [
             'dashboards' => $dashboards
@@ -52,6 +54,7 @@ class DashboardController extends Controller
         $walls = CanvasWall::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
 
         $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
+        $thermos = Thermometer::with('user')->where('dashboard_id', $dashboard->id)->get();
 
         $url = Storage::url($dashboard->imagePath);
 
@@ -63,7 +66,8 @@ class DashboardController extends Controller
             'windows' => $windows,
             'doors' => $doors,
             'walls' => $walls,
-            'lights' => $lights
+            'lights' => $lights,
+            'thermos' => $thermos
         ]);
     }
 
@@ -143,6 +147,7 @@ class DashboardController extends Controller
                     'on' => $value['isOn'],
                 ]);
                 // mongodb
+                /*
                 $devices = DB::connection('mongodb')->collection('devices')->insert([
                     'name' => $value['name'] . '-' . $dash_id,
                     'type' => 'light',
@@ -152,6 +157,24 @@ class DashboardController extends Controller
                         $topic2[0] => $topic2[1],
                     ],
                     'superuser' => false,
+                ]);
+                */
+            }
+            if( Str::contains($key , 'thermo') ) {
+                $topics = explode(",", $request->light_0['topics']);
+                $topic1 = explode(":", $topics[0]);
+                $topic2 = explode(":", $topics[1]);
+                $pwd = Hash::make($value['pwd']);
+
+                // pgsql
+                Thermometer::create([
+                    'user_id' => $request->user()->id,
+                    'dashboard_id' => $dash_id,
+                    'x' => $value['x'],
+                    'y' => $value['y'],
+                    'name' => $value['name'],
+                    'password' => $pwd,
+                    'topics' => $value['topics'],
                 ]);
             }
         }
@@ -182,8 +205,14 @@ class DashboardController extends Controller
                         ->delete();
                     
                         $name = $value['name'] . '-' . $dash_id;
+                    /*
                     DB::connection('mongodb')->collection('devices')
                         ->where('name', "=", $name)
+                        ->delete();
+                    */
+                }
+                if( Str::contains($key , 'thermo') ) {
+                    Thermometer::where('id', $value['id'])
                         ->delete();
                 }
             }
@@ -239,6 +268,7 @@ class DashboardController extends Controller
                         'on' => $value['isOn'],
                     ]);
                     // mongodb
+                    /*
                     $devices = DB::connection('mongodb')->collection('devices')->insert([
                         'name' => $value['name'] . '-' . $dash_id,
                         'type' => 'light',
@@ -248,6 +278,25 @@ class DashboardController extends Controller
                             $topic2[0] => $topic2[1],
                         ],
                         'superuser' => false,
+                    ]);
+                    */
+                }
+                if( Str::contains($key , 'thermo') ) {
+                    
+                    $topics = explode(",", $value['topics']);
+                    $topic1 = explode(":", $topics[0]);
+                    $topic2 = explode(":", $topics[1]);
+                    $pwd = Hash::make($value['pwd']);
+
+                    // pgsql
+                    Thermometer::create([
+                        'user_id' => $request->user()->id,
+                        'dashboard_id' => $dashboard->id,
+                        'x' => $value['x'],
+                        'y' => $value['y'],
+                        'name' => $value['name'],
+                        'password' => $pwd,
+                        'topics' => $value['topics'],
                     ]);
                 }
             }
@@ -261,11 +310,13 @@ class DashboardController extends Controller
         $lights = $dashboard->lights;
 
         //Delete mongoDB devices
+        /*
         foreach ($lights as $light) {
             DB::connection('mongodb')->collection('devices')
                     ->where('name', '=', $light->name . '-' . $dashboard->id)
                     ->delete();
         }
+        */
 
         $dashboard->delete();
         
@@ -277,11 +328,13 @@ class DashboardController extends Controller
         $lights = $dashboard->lights;
 
         //Delete mongoDB devices
+        /*
         foreach ($lights as $light) {
             DB::connection('mongodb')->collection('devices')
                     ->where('name', '=', $light->name . '-' . $dashboard->id)
                     ->delete();
         }
+        */
 
         $dashboard->delete();
 

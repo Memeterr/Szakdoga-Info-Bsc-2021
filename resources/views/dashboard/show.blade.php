@@ -10,6 +10,7 @@
 	const walls = @json($walls);
 
 	const lights = @json($lights);
+    const thermos = @json($thermos);
 
     const imgurl = @json($url);
 </script>

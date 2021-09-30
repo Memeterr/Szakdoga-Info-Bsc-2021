@@ -50,15 +50,12 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## TODO
 
-* make seperate functions in connection.js instead of lambda
-	- to make it a little more scalable
-
 * add new device models
 	- when adding new device, the types are predefined, so the user can't set their own type
-	- check generated topics in modal
 
 * remove mongodb from project
 	- just comment it out
+	- composer remove jenssegers/mongodb
 
 * dockerize project
 
