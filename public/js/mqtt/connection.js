@@ -16,6 +16,7 @@ client.onMessageDelivered = onMessageDelivered;
 client.connect({
 	onSuccess: onConnect,
 	onFailure: doFail,
+  reconnect: true,
 	userName : "Smarthome-dmtr",
 	password : "asd123"
 });
@@ -32,7 +33,7 @@ function onConnect() {
   // Subscribe to the topics
   if (lights?.length) {
     lights.forEach(light => {
-      console.log('subscribing to ' + light.name);
+      console.log('Subscribing to ' + light.name);
       let topics_raw = light.topics.split(",");
       let topics = topics_raw[topics_raw.length - 1].split(":");
 
@@ -45,7 +46,7 @@ function onConnect() {
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:"+responseObject.errorMessage);
+    console.log("Lost connection, reconnecting.. ");
   }
 }
 
@@ -58,8 +59,6 @@ function onMessageArrived(message) {
 
       if(topics[0] === message.destinationName) {
         const convertedMessage = JSON.parse(message.payloadString);
-        console.log(convertedMessage.status);
-        //TODO: set the light on/off
         blueprint.lights.forEach(b_light => {
           if(b_light.name === light.name) {
             if(convertedMessage.status === "on") {

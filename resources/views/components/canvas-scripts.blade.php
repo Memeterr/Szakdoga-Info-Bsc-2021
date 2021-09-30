@@ -7,6 +7,7 @@
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/wall.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/door.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/light.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/thermometer.js') }}"></script>
 
 <!-- Sketches -->
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/sketches/blueprint.js') }}"></script>

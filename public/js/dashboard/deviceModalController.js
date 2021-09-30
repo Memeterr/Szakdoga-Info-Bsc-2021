@@ -83,6 +83,8 @@ function generateTopics() {
 
 	if (blueprint.getLastDevice() instanceof Light) {
 		type = "light";
+	} else if (blueprint.getLastDevice() instanceof Thermometer) {
+		type = "thermometer";
 	}
 
 	if (name === "" || name === undefined) {

@@ -57,8 +57,10 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 	- when adding new device, the types are predefined, so the user can't set their own type
 	- check generated topics in modal
 
-* at create device modal generate default topics, just like at the iotgateway
-	- maybe it's enough if only the object's coordinates and name are stored in pgsql, other attributes already stored in mongodb
+* remove mongodb from project
+	- just comment it out
+
+* dockerize project
 
 * canvas delete button decrease time interval
 

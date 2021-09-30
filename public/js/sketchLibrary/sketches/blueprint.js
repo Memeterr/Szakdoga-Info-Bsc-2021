@@ -11,6 +11,7 @@ let blueprintTemplate = function (p) {
 	p.referenceDoor = new Door(100, 122, 50, 50, p.PI, p.PI + p.HALF_PI, p);
 
 	p.referenceLight = new Light(100, 100, p);
+	p.referenceThermo = new Thermometer(100, 100, p);
 
 	p.imageSet = false;
 
@@ -34,6 +35,7 @@ let blueprintTemplate = function (p) {
 
 	// Devices
 	p.lights = [];
+	p.thermos = [];
 
 	p.singleDashView = false;
     if (window.location.href.indexOf("/dashboard") > -1) {
@@ -55,6 +57,7 @@ let blueprintTemplate = function (p) {
 		//Images
 		p.lightOffImg = p.loadImage('../js/sketchLibrary/assets/lightOff.png');
 		p.lightOnImg = p.loadImage('../js/sketchLibrary/assets/lightOn.png');
+		p.thermoImg = p.loadImage('../js/sketchLibrary/assets/thermometer.png');
 		if(imgurl != null && imgurl != '' && imgurl != '/storage/') {
 			p.backgroundImg = p.loadImage(imgurl);
 			p.backgroundImgLoaded = true;
@@ -118,6 +121,8 @@ let blueprintTemplate = function (p) {
 		//Puts down a chosen device
 		if (p.referenceLight.isFollowing) {
 			p.canvas.mousePressed(p.putDownLight);
+		} else if (p.referenceThermo.isFollowing) {
+			p.canvas.mousePressed(p.putDownThermo);
 		}
 
 		//Resets selected objects if selectMode turned off
@@ -129,6 +134,7 @@ let blueprintTemplate = function (p) {
 			
 		//Draw devices
 		p.lights.forEach(p.drawObject);
+		p.thermos.forEach(p.drawObject);
 
 		//Draw objects
 		p.walls.forEach(p.drawObject);
@@ -158,6 +164,12 @@ let blueprintTemplate = function (p) {
 		if (p.referenceLight.isFollowing == true) {
 			p.followLight = new Light(p.mouseX-(p.referenceLight.w/2), p.mouseY-(p.referenceLight.h/2), p);
 			p.followLight.show();
+		}
+
+		// Thermometer follows mouse
+		if (p.referenceThermo.isFollowing == true) {
+			p.followThermo = new Thermometer(p.mouseX-(p.referenceThermo.w/2), p.mouseY-(p.referenceThermo.h/2), p);
+			p.followThermo.show();
 		}
 
 		//Draw rubber lines for the walls
@@ -276,8 +288,30 @@ let blueprintTemplate = function (p) {
 		}
 	}
 
+	p.putDownThermo = function () {
+		if (p.referenceThermo.isFollowing == true) {
+			$("#deviceModal").show();
+			p.referenceThermo.isFollowing = false;
+			blueprint.referenceThermo.addClick();
+
+			p.thermo = new Thermometer(p.mouseX-(p.referenceThermo.w/2), p.mouseY-(p.referenceThermo.h/2), p);
+			p.thermo.isPlaced = true;
+			p.thermos.push(p.thermo);
+			p.newItems.push(p.thermo);
+			p.thermo.show();
+		}
+	}
+
 	p.drawObject = function (object) {
 		if (object instanceof Light) {
+			if (object.isPlaced && object.isSelected) {
+				object.showSelected();
+			} else if (object.isPlaced) {
+				object.show();
+				object.firstPlacedown = false;
+			}
+		}
+		if (object instanceof Thermometer) {
 			if (object.isPlaced && object.isSelected) {
 				object.showSelected();
 			} else if (object.isPlaced) {
@@ -350,6 +384,15 @@ let blueprintTemplate = function (p) {
 				object.addClick();
 			}
 		} else if (object instanceof Light) {
+			if ( p.cursorOverSquare(object.x, object.y, object.w, object.h) && object.firstPlacedown == false && p.editmode) {
+				if(object.clickCount % 2 == 1) {
+					object.isSelected = false;
+				} else {
+					object.isSelected = true;
+				}
+				object.addClick();
+			}
+		} else if (object instanceof Thermometer) {
 			if ( p.cursorOverSquare(object.x, object.y, object.w, object.h) && object.firstPlacedown == false && p.editmode) {
 				if(object.clickCount % 2 == 1) {
 					object.isSelected = false;
@@ -433,6 +476,18 @@ let blueprintTemplate = function (p) {
 		p.oldItems.push(p.light);
 	}
 
+	p.initializeThermo = function(thermo) {
+		p.thermo = new Thermometer(parseFloat(thermo.x), parseFloat(thermo.y), p);
+		p.thermo.name = thermo.name;
+		p.thermo.topics = thermo.topics;
+		p.thermo.password = thermo.password;
+		p.thermo.isOn = thermo.on;
+		p.thermo.isPlaced = true;
+		p.thermo.id = thermo.id;
+		p.thermos.push(p.thermo);
+		p.oldItems.push(p.thermo);
+	}
+
 	p.getLastDevice = function () {
 		let device = null;
 		let created = 0;
@@ -440,6 +495,12 @@ let blueprintTemplate = function (p) {
 			if (p.lights[i].timeStamp > created) {
 				created = p.lights[i].timeStamp;
 				device = p.lights[i];
+			}
+		}
+		for (let i = 0; i < p.thermos.length; i++) {
+			if(p.thermos[i].timeStamp >created) {
+				created = p.thermos[i].timeStamp;
+				device = p.thermos[i];
 			}
 		}
 
@@ -517,6 +578,7 @@ let blueprintTemplate = function (p) {
 		p.walls.forEach(p.selectObject);
 		p.doors.forEach(p.selectObject);
 		p.lights.forEach(p.selectObject);
+		p.thermos.forEach(p.selectObject);
 
 		// Draw rubber line only if clicked on canvas
 		if (p.linerStatus && p.cursorOverSquare(0, 0, p.canvasWidth, p.canvasParams.h)) {
