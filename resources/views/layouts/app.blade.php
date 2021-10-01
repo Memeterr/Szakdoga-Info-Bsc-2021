@@ -30,8 +30,10 @@
                                     <a href="{{ route('dashboard') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         My Dashboards</a>
 
-                                    <a href="{{ route('dashboard_create') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
+                                    @if (Route::currentRouteName() != 'dashboard_create')
+                                        <a href="{{ route('dashboard_create') }}" class="select-none px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">
                                         Create Dashboard</a>
+                                    @endif
                                 @endauth
                             </div>
                         </div>

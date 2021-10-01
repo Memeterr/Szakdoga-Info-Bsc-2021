@@ -18,8 +18,8 @@ client.connect({
 	onFailure: doFail,
   reconnect: true,
   keepAliveInterval: 120,
-	userName : "Smarthome-dmt",
-	password : "asd123"
+	userName : "Smarthome-dmtr",
+	password : "asd1234"
 });
 
 function doFail(err) {
@@ -92,7 +92,9 @@ function onMessageArrived(message) {
         const convertedMessage = JSON.parse(message.payloadString);
         blueprint.thermos.forEach(b_thermo => {
           if(b_thermo.name === thermo.name) {
-            b_thermo.setTemp(convertedMessage.temperature);
+            if(convertedMessage.hasOwnProperty('temperature')) {
+              b_thermo.setTemp(convertedMessage.temperature);
+            }
           }
         });
       }

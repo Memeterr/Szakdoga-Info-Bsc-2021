@@ -52,11 +52,10 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 * szakdogába írni: mqttx és használata
 
-* check if the converted mqtt message object has 'temperature', etc.. parameters
-
-* some minimal design to the welcome page
+* some minimal design
 	- different text whether a user logged in or not
-	- login/register set header text
+	- delete button on the right side (when listing dashboards)
+	- show toolhint when hovering over the canvas buttons
 
 * add new device models
 	- when adding new device, the types are predefined, so the user can't set their own type

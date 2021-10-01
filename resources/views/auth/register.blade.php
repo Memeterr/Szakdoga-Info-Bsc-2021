@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('header_title')
+    Register
+@endsection
+
 @section('content')
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-6">
         <!-- class="w-full" - for div to fully cover screen width  -->
         <div class="w-4/12 bg-white p-6 rounded-lg">
             <form action="{{ route('register') }}" method="post">
