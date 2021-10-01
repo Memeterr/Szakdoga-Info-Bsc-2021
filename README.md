@@ -65,7 +65,9 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 	- just comment it out
 	- composer remove jenssegers/mongodb
 
-* dockerize project
+* dockerize project (only when everything is done)
+	- install from php7.4 base image
+	- COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 * canvas delete button decrease time interval
 
