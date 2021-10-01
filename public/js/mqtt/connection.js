@@ -17,7 +17,8 @@ client.connect({
 	onSuccess: onConnect,
 	onFailure: doFail,
   reconnect: true,
-	userName : "Smarthome-dmtr",
+  keepAliveInterval: 120,
+	userName : "Smarthome-dmt",
 	password : "asd123"
 });
 
@@ -41,6 +42,15 @@ function onConnect() {
     });
   }
 
+  if (thermos?.length) {
+    thermos.forEach(thermo => {
+      console.log('Subscribing to ' + thermo.name);
+      let topics_raw = thermo.topics.split(",");
+      let topics = topics_raw[topics_raw.length - 1].split(":");
+
+      client.subscribe(topics[0]);
+    });
+  }
 }
 
 // called when the client loses its connection
@@ -52,6 +62,7 @@ function onConnectionLost(responseObject) {
 
 // called when a message arrives
 function onMessageArrived(message) {
+  console.log(message.payloadString);
   if (lights?.length) {
     lights.forEach(light => {
       let topics_raw = light.topics.split(",");
@@ -66,6 +77,22 @@ function onMessageArrived(message) {
             } else if (convertedMessage.status === "off") {
               b_light.isOn = false;
             }
+          }
+        });
+      }
+    });
+  }
+
+  if(thermos?.length) {
+    thermos.forEach(thermo => {
+      let topics_raw = thermo.topics.split(",");
+      let topics = topics_raw[topics_raw.length - 1].split(":");
+
+      if(topics[0] === message.destinationName) {
+        const convertedMessage = JSON.parse(message.payloadString);
+        blueprint.thermos.forEach(b_thermo => {
+          if(b_thermo.name === thermo.name) {
+            b_thermo.setTemp(convertedMessage.temperature);
           }
         });
       }

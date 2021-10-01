@@ -8,7 +8,7 @@ class Thermometer {
         this.w = 25;
 		this.h = 25;
 
-        this.tempValue = 10
+        this.tempValue = null;
         this.temp = this.tempValue + " °C";
 
         this.name = "";
@@ -68,6 +68,11 @@ class Thermometer {
 
     addClick() {
 		this.clickCount++;
+	}
+
+	setTemp(value) {
+		this.tempValue = value;
+		this.temp = this.tempValue + " °C";
 	}
 
     getTextWidth() {
