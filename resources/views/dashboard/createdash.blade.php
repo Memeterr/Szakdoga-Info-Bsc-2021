@@ -6,6 +6,7 @@
     const walls = [];
     const lights = [];
     const thermos = [];
+    const humidities = [];
 
     const imgurl = '';
 </script>

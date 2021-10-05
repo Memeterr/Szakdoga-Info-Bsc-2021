@@ -12,6 +12,7 @@ let blueprintTemplate = function (p) {
 
 	p.referenceLight = new Light(100, 100, p);
 	p.referenceThermo = new Thermometer(100, 100, p);
+	p.referenceHumidity = new Humidity(100, 100, p);
 
 	p.imageSet = false;
 
@@ -36,6 +37,7 @@ let blueprintTemplate = function (p) {
 	// Devices
 	p.lights = [];
 	p.thermos = [];
+	p.humidities = [];
 
 	p.singleDashView = false;
     if (window.location.href.indexOf("/dashboard") > -1) {
@@ -58,6 +60,7 @@ let blueprintTemplate = function (p) {
 		p.lightOffImg = p.loadImage('../js/sketchLibrary/assets/lightOff.png');
 		p.lightOnImg = p.loadImage('../js/sketchLibrary/assets/lightOn.png');
 		p.thermoImg = p.loadImage('../js/sketchLibrary/assets/thermometer.png');
+		p.humidityImg = p.loadImage('../js/sketchLibrary/assets/humidity.png');
 		if(imgurl != null && imgurl != '' && imgurl != '/storage/') {
 			p.backgroundImg = p.loadImage(imgurl);
 			p.backgroundImgLoaded = true;
@@ -91,6 +94,9 @@ let blueprintTemplate = function (p) {
 		}
 		if (thermos?.length) {
 			thermos.forEach(p.initializeThermo);
+		}
+		if(humidities?.length) {
+			humidities.forEach(p.initializeHumidity);
 		}
 		
 		//p.fileInput.position(p.canvasWidth/30 - 25, p.canvasParams.h - 40);
@@ -126,6 +132,8 @@ let blueprintTemplate = function (p) {
 			p.canvas.mousePressed(p.putDownLight);
 		} else if (p.referenceThermo.isFollowing) {
 			p.canvas.mousePressed(p.putDownThermo);
+		} else if(p.referenceHumidity.isFollowing) {
+			p.canvas.mousePressed(p.putDownHumidity);
 		}
 
 		//Resets selected objects if selectMode turned off
@@ -138,6 +146,7 @@ let blueprintTemplate = function (p) {
 		//Draw devices
 		p.lights.forEach(p.drawObject);
 		p.thermos.forEach(p.drawObject);
+		p.humidities.forEach(p.drawObject);
 
 		//Draw objects
 		p.walls.forEach(p.drawObject);
@@ -173,6 +182,12 @@ let blueprintTemplate = function (p) {
 		if (p.referenceThermo.isFollowing == true) {
 			p.followThermo = new Thermometer(p.mouseX-(p.referenceThermo.w/2), p.mouseY-(p.referenceThermo.h/2), p);
 			p.followThermo.show();
+		}
+
+		// Humidity follows mouse
+		if (p.referenceHumidity.isFollowing == true) {
+			p.followHumidity = new Humidity(p.mouseX-(p.referenceHumidity.w/2), p.mouseY-(p.referenceHumidity.h/2), p);
+			p.followHumidity.show();
 		}
 
 		//Draw rubber lines for the walls
@@ -305,6 +320,20 @@ let blueprintTemplate = function (p) {
 		}
 	}
 
+	p.putDownHumidity = function () {
+		if (p.referenceHumidity.isFollowing == true) {
+			$("#deviceModal").show();
+			p.referenceHumidity.isFollowing = false;
+			blueprint.referenceHumidity.addClick();
+
+			p.humidity = new Humidity(p.mouseX-(p.referenceHumidity.w/2), p.mouseY-(p.referenceHumidity.h/2), p);
+			p.humidity.isPlaced = true;
+			p.humidities.push(p.humidity);
+			p.newItems.push(p.humidity);
+			p.humidity.show();
+		}
+	}
+
 	p.drawObject = function (object) {
 		if (object instanceof Light) {
 			if (object.isPlaced && object.isSelected) {
@@ -315,6 +344,14 @@ let blueprintTemplate = function (p) {
 			}
 		}
 		if (object instanceof Thermometer) {
+			if (object.isPlaced && object.isSelected) {
+				object.showSelected();
+			} else if (object.isPlaced) {
+				object.show();
+				object.firstPlacedown = false;
+			}
+		}
+		if (object instanceof Humidity) {
 			if (object.isPlaced && object.isSelected) {
 				object.showSelected();
 			} else if (object.isPlaced) {
@@ -396,6 +433,15 @@ let blueprintTemplate = function (p) {
 				object.addClick();
 			}
 		} else if (object instanceof Thermometer) {
+			if ( p.cursorOverSquare(object.x, object.y, object.w, object.h) && object.firstPlacedown == false && p.editmode) {
+				if(object.clickCount % 2 == 1) {
+					object.isSelected = false;
+				} else {
+					object.isSelected = true;
+				}
+				object.addClick();
+			}
+		} else if (object instanceof Humidity) {
 			if ( p.cursorOverSquare(object.x, object.y, object.w, object.h) && object.firstPlacedown == false && p.editmode) {
 				if(object.clickCount % 2 == 1) {
 					object.isSelected = false;
@@ -491,6 +537,18 @@ let blueprintTemplate = function (p) {
 		p.oldItems.push(p.thermo);
 	}
 
+	p.initializeHumidity = function(humidity) {
+		p.humidity = new Humidity(parseFloat(humidity.x), parseFloat(humidity.y), p);
+		p.humidity.name = humidity.name;
+		p.humidity.topics = humidity.topics;
+		p.humidity.password = humidity.password;
+		p.humidity.isOn = humidity.on;
+		p.humidity.isPlaced = true;
+		p.humidity.id = humidity.id;
+		p.humidities.push(p.humidity);
+		p.oldItems.push(p.humidity);
+	}
+
 	p.getLastDevice = function () {
 		let device = null;
 		let created = 0;
@@ -504,6 +562,12 @@ let blueprintTemplate = function (p) {
 			if(p.thermos[i].timeStamp >created) {
 				created = p.thermos[i].timeStamp;
 				device = p.thermos[i];
+			}
+		}
+		for (let i = 0; i < p.humidities.length; i++) {
+			if(p.humidities[i].timeStamp >created) {
+				created = p.humidities[i].timeStamp;
+				device = p.humidities[i];
 			}
 		}
 
@@ -582,6 +646,7 @@ let blueprintTemplate = function (p) {
 		p.doors.forEach(p.selectObject);
 		p.lights.forEach(p.selectObject);
 		p.thermos.forEach(p.selectObject);
+		p.humidities.forEach(p.selectObject);
 
 		// Draw rubber line only if clicked on canvas
 		if (p.linerStatus && p.cursorOverSquare(0, 0, p.canvasWidth, p.canvasParams.h)) {

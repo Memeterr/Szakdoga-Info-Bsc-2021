@@ -62,6 +62,16 @@ function updateDashValues() {
 				$('#form').append('<input type="hidden" name="thermo_' + i + '[timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
 				$('#form').append('<input type="hidden" name="thermo_' + i + '[firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
 			}
+			if(blueprint.deletedOldItems[i] instanceof Humidity) {
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[x]" value="' + blueprint.deletedOldItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[y]" value="' + blueprint.deletedOldItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[isPlaced]" value="' + blueprint.deletedOldItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[name]" value="' + blueprint.deletedOldItems[i].name + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[pwd]" value="' + blueprint.deletedOldItems[i].password + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[topics]" value="' + blueprint.deletedOldItems[i].topics + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[timeStamp]" value="' + blueprint.deletedOldItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[firstPlacedown]" value="' + blueprint.deletedOldItems[i].firstPlacedown + '" />');
+			}
 		}
 	}
 
@@ -117,6 +127,16 @@ function updateDashValues() {
 				$('#form').append('<input type="hidden" name="thermo_' + i + '[timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
 				$('#form').append('<input type="hidden" name="thermo_' + i + '[firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
 			}
+			if(blueprint.newItems[i] instanceof Humidity) {
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[x]" value="' + blueprint.newItems[i].x + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[y]" value="' + blueprint.newItems[i].y + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[isPlaced]" value="' + blueprint.newItems[i].isPlaced + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[name]" value="' + blueprint.newItems[i].name + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[pwd]" value="' + blueprint.newItems[i].password + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[topics]" value="' + blueprint.newItems[i].topics + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[timeStamp]" value="' + blueprint.newItems[i].timeStamp + '" />');
+				$('#form').append('<input type="hidden" name="humidity_' + i + '[firstPlacedown]" value="' + blueprint.newItems[i].firstPlacedown + '" />');
+			}
 		}
 	}
 
@@ -151,6 +171,19 @@ function addDashValues() {
 			$('#form').append('<input type="hidden" name="thermo_' + i + '[topics]" value="' + blueprint.thermos[i].topics + '" />');
 			$('#form').append('<input type="hidden" name="thermo_' + i + '[timeStamp]" value="' + blueprint.thermos[i].timeStamp + '" />');
 			$('#form').append('<input type="hidden" name="thermo_' + i + '[firstPlacedown]" value="' + blueprint.thermos[i].firstPlacedown + '" />');
+		}
+	}
+
+	for(let i=0; i<blueprint.humidities.length; i++) {
+		if(blueprint.humidities[i].isPlaced) {
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[x]" value="' + blueprint.humidities[i].x + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[y]" value="' + blueprint.humidities[i].y + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[isPlaced]" value="' + blueprint.humidities[i].isPlaced + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[name]" value="' + blueprint.humidities[i].name + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[pwd]" value="' + blueprint.humidities[i].password + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[topics]" value="' + blueprint.humidities[i].topics + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[timeStamp]" value="' + blueprint.humidities[i].timeStamp + '" />');
+			$('#form').append('<input type="hidden" name="humidity_' + i + '[firstPlacedown]" value="' + blueprint.humidities[i].firstPlacedown + '" />');
 		}
 	}
 

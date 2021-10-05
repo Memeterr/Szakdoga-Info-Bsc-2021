@@ -33,8 +33,8 @@ class DashboardController extends Controller
             ->with('user')
             ->where('user_id', '=', auth()->user()->id)
             ->paginate(4);
-        
-        
+
+
         return view('dashboard.indexdash', [
             'dashboards' => $dashboards
         ]);
@@ -47,7 +47,8 @@ class DashboardController extends Controller
     }
 
     //needs new controller
-    public function show(Dashboard $dashboard) {
+    public function show(Dashboard $dashboard)
+    {
         //dd($dashboard);
         $windows = CanvasWindow::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
         $doors = CanvasDoor::with('dashboard')->where('dashboard_id', $dashboard->id)->get();
@@ -55,6 +56,7 @@ class DashboardController extends Controller
 
         $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
         $thermos = Thermometer::with('user')->where('dashboard_id', $dashboard->id)->get();
+        $humidities = [];
 
         $url = Storage::url($dashboard->imagePath);
 
@@ -67,7 +69,8 @@ class DashboardController extends Controller
             'doors' => $doors,
             'walls' => $walls,
             'lights' => $lights,
-            'thermos' => $thermos
+            'thermos' => $thermos,
+            'humidities' => $humidities
         ]);
     }
 
@@ -85,8 +88,8 @@ class DashboardController extends Controller
         if ($request->file('imageInput') != null) {
             $path = Storage::putFile('public/dashimages', $request->file('imageInput'), 'public');
         }
-        
-        if( $request->dashname == null || $request->dashname == "" ) {
+
+        if ($request->dashname == null || $request->dashname == "") {
             $dashname = "Default-" . now()->toDateTimeString();
         } else {
             $dashname = $request->dashname;
@@ -101,7 +104,7 @@ class DashboardController extends Controller
 
         // Store devices to pgsql (default db)
         foreach ($request->all() as $key => $value) {
-            if( Str::contains($key , 'window') ) {
+            if (Str::contains($key, 'window')) {
                 CanvasWindow::create([
                     'dashboard_id' => $dash_id,
                     'x' => $value['x'],
@@ -111,7 +114,7 @@ class DashboardController extends Controller
                     'firstPlacedown' => $value['firstPlacedown'],
                 ]);
             }
-            if( Str::contains($key , 'door') ) {
+            if (Str::contains($key, 'door')) {
                 CanvasDoor::create([
                     'dashboard_id' => $dash_id,
                     'x' => $value['x'],
@@ -119,7 +122,7 @@ class DashboardController extends Controller
                     'isRotated' => $value['isRotated'],
                 ]);
             }
-            if( Str::contains($key , 'wall') ) {
+            if (Str::contains($key, 'wall')) {
                 CanvasWall::create([
                     'dashboard_id' => $dash_id,
                     'x1' => $value['x1'],
@@ -129,7 +132,7 @@ class DashboardController extends Controller
                     'isPlaced' => $value['isPlaced'],
                 ]);
             }
-            if( Str::contains($key , 'light') ) {
+            if (Str::contains($key, 'light')) {
                 $topics = explode(",", $request->light_0['topics']);
                 $topic1 = explode(":", $topics[0]);
                 $topic2 = explode(":", $topics[1]);
@@ -160,7 +163,7 @@ class DashboardController extends Controller
                 ]);
                 */
             }
-            if( Str::contains($key , 'thermo') ) {
+            if (Str::contains($key, 'thermo')) {
                 $topics = explode(",", $request->light_0['topics']);
                 $topic1 = explode(":", $topics[0]);
                 $topic2 = explode(":", $topics[1]);
@@ -182,46 +185,47 @@ class DashboardController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function update(Dashboard $dashboard, Request $request) {
+    public function update(Dashboard $dashboard, Request $request)
+    {
         //dd($request->deleted['door_0']['id']);
         $dash_id = Dashboard::latest()->first()->id;
-        
-        if($request->deleted != null) {
+
+        if ($request->deleted != null) {
             foreach ($request->deleted as $key => $value) {
-                if( Str::contains($key , 'window') ) {
+                if (Str::contains($key, 'window')) {
                     CanvasWindow::where('id', $value['id'])
                         ->delete();
                 }
-                if( Str::contains($key , 'door') ) {
+                if (Str::contains($key, 'door')) {
                     CanvasDoor::where('id', $value['id'])
                         ->delete();
                 }
-                if( Str::contains($key , 'wall') ) {
+                if (Str::contains($key, 'wall')) {
                     CanvasWall::where('id', $value['id'])
                         ->delete();
                 }
-                if( Str::contains($key , 'light') ) {
+                if (Str::contains($key, 'light')) {
                     Light::where('id', $value['id'])
                         ->delete();
-                    
-                        $name = $value['name'] . '-' . $dash_id;
+
+                    $name = $value['name'] . '-' . $dash_id;
                     /*
                     DB::connection('mongodb')->collection('devices')
                         ->where('name', "=", $name)
                         ->delete();
                     */
                 }
-                if( Str::contains($key , 'thermo') ) {
+                if (Str::contains($key, 'thermo')) {
                     Thermometer::where('id', $value['id'])
                         ->delete();
                 }
             }
         }
 
-        if($request->new != null) {
+        if ($request->new != null) {
             foreach ($request->new as $key => $value) {
-                
-                if( Str::contains($key , 'window') ) {
+
+                if (Str::contains($key, 'window')) {
                     CanvasWindow::create([
                         'dashboard_id' => $dashboard->id,
                         'x' => $value['x'],
@@ -231,7 +235,7 @@ class DashboardController extends Controller
                         'firstPlacedown' => $value['firstPlacedown'],
                     ]);
                 }
-                if( Str::contains($key , 'door') ) {
+                if (Str::contains($key, 'door')) {
                     CanvasDoor::create([
                         'dashboard_id' => $dashboard->id,
                         'x' => $value['x'],
@@ -239,7 +243,7 @@ class DashboardController extends Controller
                         'isRotated' => $value['isRotated'],
                     ]);
                 }
-                if( Str::contains($key , 'wall') ) {
+                if (Str::contains($key, 'wall')) {
                     CanvasWall::create([
                         'dashboard_id' => $dashboard->id,
                         'x1' => $value['x1'],
@@ -249,8 +253,8 @@ class DashboardController extends Controller
                         'isPlaced' => $value['isPlaced'],
                     ]);
                 }
-                if( Str::contains($key , 'light') ) {
-                    
+                if (Str::contains($key, 'light')) {
+
                     $topics = explode(",", $value['topics']);
                     $topic1 = explode(":", $topics[0]);
                     $topic2 = explode(":", $topics[1]);
@@ -281,8 +285,8 @@ class DashboardController extends Controller
                     ]);
                     */
                 }
-                if( Str::contains($key , 'thermo') ) {
-                    
+                if (Str::contains($key, 'thermo')) {
+
                     $topics = explode(",", $value['topics']);
                     $topic1 = explode(":", $topics[0]);
                     $topic2 = explode(":", $topics[1]);
@@ -305,7 +309,8 @@ class DashboardController extends Controller
         return back();
     }
 
-    public function destroy(Dashboard $dashboard) {
+    public function destroy(Dashboard $dashboard)
+    {
         //dd($dashboard->lights);
         $lights = $dashboard->lights;
 
@@ -319,12 +324,13 @@ class DashboardController extends Controller
         */
 
         $dashboard->delete();
-        
+
         return back();
     }
 
     //need new controller
-    public function destroyInView(Dashboard $dashboard) {
+    public function destroyInView(Dashboard $dashboard)
+    {
         $lights = $dashboard->lights;
 
         //Delete mongoDB devices
@@ -342,7 +348,7 @@ class DashboardController extends Controller
             ->with('user')
             ->where('user_id', '=', auth()->user()->id)
             ->paginate(4);
-        
+
         return view('dashboard.indexdash', [
             'dashboards' => $dashboards
         ]);

@@ -37,6 +37,10 @@ $( function() {
                 blueprint.referenceThermo.isFollowing = false;
                 blueprint.referenceThermo.addClick();
             }
+            if(blueprint.referenceHumidity.isFollowing) {
+                blueprint.referenceHumidity.isFollowing = false;
+                blueprint.referenceHumidity.addClick();
+            }
             if(blueprint.editmode) {
                 blueprint.editmode = false;
                 countEditmode++;
@@ -68,6 +72,10 @@ $( function() {
             if(blueprint.referenceThermo.isFollowing) {
                 blueprint.referenceThermo.isFollowing = false;
                 blueprint.referenceThermo.addClick();
+            }
+            if(blueprint.referenceHumidity.isFollowing) {
+                blueprint.referenceHumidity.isFollowing = false;
+                blueprint.referenceHumidity.addClick();
             }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
@@ -111,6 +119,10 @@ $( function() {
             if(blueprint.referenceThermo.isFollowing) {
                 blueprint.referenceThermo.isFollowing = false;
                 blueprint.referenceThermo.addClick();
+            }
+            if(blueprint.referenceHumidity.isFollowing) {
+                blueprint.referenceHumidity.isFollowing = false;
+                blueprint.referenceHumidity.addClick();
             }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
@@ -156,6 +168,10 @@ $( function() {
                 blueprint.referenceThermo.isFollowing = false;
                 blueprint.referenceThermo.addClick();
             }
+            if(blueprint.referenceHumidity.isFollowing) {
+                blueprint.referenceHumidity.isFollowing = false;
+                blueprint.referenceHumidity.addClick();
+            }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
@@ -200,6 +216,10 @@ $( function() {
                 blueprint.referenceLight.isFollowing = false;
                 blueprint.referenceLight.addClick();
             }
+            if(blueprint.referenceHumidity.isFollowing) {
+                blueprint.referenceHumidity.isFollowing = false;
+                blueprint.referenceHumidity.addClick();
+            }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;
                 countLiner++;
@@ -220,6 +240,54 @@ $( function() {
         }
         blueprint.referenceThermo.addClick();
     });
+
+    // Humidity Button
+    $("#humidity").click(function(e) {
+        if(blueprint.referenceHumidity.clickCount % 2 == 1) {
+            blueprint.referenceHumidity.isFollowing = false;
+        } else {
+            blueprint.referenceHumidity.isFollowing = true;
+
+            //Resets wall
+            blueprint.linePoints = [];
+
+            // Disable other ongoing drawing functions and sync their on/off status
+            if(blueprint.referenceDoor.isFollowing) {
+                blueprint.referenceDoor.isFollowing = false;
+                blueprint.referenceDoor.addClick();
+            }
+            if(blueprint.referenceWindowFrame.isFollowing) {
+                blueprint.referenceWindowFrame.isFollowing = false;
+                blueprint.referenceWindowFrame.addClick();
+            }
+            if(blueprint.referenceLight.isFollowing) {
+                blueprint.referenceLight.isFollowing = false;
+                blueprint.referenceLight.addClick();
+            }
+            if(blueprint.referenceThermo.isFollowing) {
+                blueprint.referenceThermo.isFollowing = false;
+                blueprint.referenceThermo.addClick();
+            }
+            if(blueprint.linerStatus) {
+                blueprint.linerStatus = false;
+                countLiner++;
+                
+                let stopTime = new Date();
+                if(stopTime - blueprint.startTime < 500) {
+                    blueprint.walls[blueprint.walls.length - 1].isPlaced = false;
+                }
+                
+                //Resets wall
+                blueprint.linePoints = [];
+            }
+            if(blueprint.editmode) {
+                blueprint.editmode = false;
+                countEditmode++;
+            }
+            
+        }
+        blueprint.referenceHumidity.addClick();
+    });
     
     // Delete Button
     $("#delete").click(function(e) {
@@ -228,6 +296,7 @@ $( function() {
         blueprint.doors.forEach(blueprint.deleteObject);
         blueprint.lights.forEach(blueprint.deleteObject);
         blueprint.thermos.forEach(blueprint.deleteObject);
+        blueprint.humidities.forEach(blueprint.deleteObject);
 
         if(blueprint.referenceWindowFrame.isFollowing) {
             blueprint.referenceWindowFrame.isFollowing = false;
@@ -244,6 +313,10 @@ $( function() {
         if(blueprint.referenceThermo.isFollowing) {
             blueprint.referenceThermo.isFollowing = false;
             blueprint.referenceThermo.addClick();
+        }
+        if(blueprint.referenceHumidity.isFollowing) {
+            blueprint.referenceHumidity.isFollowing = false;
+            blueprint.referenceHumidity.addClick();
         }
         if(blueprint.linerStatus) {
             blueprint.linerStatus = false;
@@ -285,6 +358,10 @@ $( function() {
             if(blueprint.referenceThermo.isFollowing) {
                 blueprint.referenceThermo.isFollowing = false;
                 blueprint.referenceThermo.addClick();
+            }
+            if(blueprint.referenceHumidity.isFollowing) {
+                blueprint.referenceHumidity.isFollowing = false;
+                blueprint.referenceHumidity.addClick();
             }
             if(blueprint.linerStatus) {
                 blueprint.linerStatus = false;

@@ -13,16 +13,19 @@
     </div>
 
     <div class="cursor-pointer absolute grid grid-flow-col grid-cols-5 items-center justify-center w-3/6 h-12 bg-gray-200 bottom-0 left-2/4 transform -translate-y-2/4 -translate-x-2/4">
-        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100">
+        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100" id="lock">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             Door Lock
         </div>
         <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100" id="thermometer">
+            <svg class="h-5 w-5 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="6" cy="8" r="2" />  <path d="M20 9a3 3 0 0 0 -3 -3h-1a3 3 0 0 0 -3 3v6a3 3 0 0 0 3 3h1a3 3 0 0 0 3 -3" /></svg>
+            <!--
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.05 3.636a1 1 0 010 1.414 7 7 0 000 9.9 1 1 0 11-1.414 1.414 9 9 0 010-12.728 1 1 0 011.414 0zm9.9 0a1 1 0 011.414 0 9 9 0 010 12.728 1 1 0 11-1.414-1.414 7 7 0 000-9.9 1 1 0 010-1.414zM7.879 6.464a1 1 0 010 1.414 3 3 0 000 4.243 1 1 0 11-1.415 1.414 5 5 0 010-7.07 1 1 0 011.415 0zm4.242 0a1 1 0 011.415 0 5 5 0 010 7.072 1 1 0 01-1.415-1.415 3 3 0 000-4.242 1 1 0 010-1.415zM10 9a1 1 0 011 1v.01a1 1 0 11-2 0V10a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
+            -->
             Temp
         </div>
         <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100" id="light">
@@ -31,14 +34,14 @@
             </svg>
             Light
         </div>
-        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100">
+        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-r-0 border-black hover:bg-gray-100" id="humidity">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M13 7H7v6h6V7z" />
                 <path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clip-rule="evenodd" />
             </svg>
-            Plug
+            Humidity
         </div>
-        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-black hover:bg-gray-100">
+        <div class="select-none flex flex-col w-auto h-full justify-center items-center border border-b-0 border-black hover:bg-gray-100" id="sensor">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
             </svg>

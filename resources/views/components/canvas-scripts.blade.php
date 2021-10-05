@@ -3,7 +3,7 @@
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/js-libraries/jquery-3.5.1.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/js-libraries/tipso.js') }}"></script>
-<link rel="stylesheet" href="js/sketchLibrary/js-libraries/tipso.css">
+<link rel="stylesheet" href="{{ asset('js/sketchLibrary/js-libraries/tipso.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <!-- Classes -->
@@ -12,6 +12,7 @@
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/door.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/light.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/thermometer.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/sketchLibrary/classes/humidity.js') }}"></script>
 
 <!-- Sketches -->
 <script type="text/javascript" src="{{ asset('js/sketchLibrary/sketches/blueprint.js') }}"></script>

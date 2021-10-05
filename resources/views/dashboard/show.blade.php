@@ -11,6 +11,7 @@
 
 	const lights = @json($lights);
     const thermos = @json($thermos);
+    const humidities = @json($humidities);
 
     const imgurl = @json($url);
 </script>
