@@ -34,15 +34,16 @@
 
 							<p>Devices: {{ $dashboard->lights->count()+$dashboard->thermos->count() }}</p>
 
-							<div class="float-left">
-								<form action="{{ route('dashboard.destroy', $dashboard) }}" method="post">
-									@csrf
-									@method('DELETE')
-									<button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-1 px-4 border border-red-500 hover:border-transparent rounded">
-										Delete
-									</button>
-								</form>
-							</div>
+						</div>
+
+						<div class="float-right">
+							<form action="{{ route('dashboard.destroy', $dashboard) }}" method="post">
+								@csrf
+								@method('DELETE')
+								<button type="submit" class="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-1 px-4 border border-red-500 hover:border-transparent rounded">
+									Delete
+								</button>
+							</form>
 						</div>
             		</div>
             	@endforeach

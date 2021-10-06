@@ -100,6 +100,24 @@ function onMessageArrived(message) {
       }
     });
   }
+
+  if(humidities?.length) {
+    humidities.forEach(humidity => {
+      let topics_raw = humidity.topics.split(",");
+      let topics = topics_raw[topics_raw.length - 1].split(":");
+
+      if(topics[0] === message.destinationName) {
+        const convertedMessage = JSON.parse(message.payloadString);
+        blueprint.humidities.forEach(b_humidity => {
+          if(b_humidity.name === humidity.name) {
+            if(convertedMessage.hasOwnProperty('humidity')) {
+              b_humidity.setTemp(convertedMessage.humidity);
+            }
+          }
+        });
+      }
+    });
+  }
 }
 
 function onMessageDelivered(message) {

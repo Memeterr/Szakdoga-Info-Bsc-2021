@@ -44,25 +44,21 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 -   To send data to the app through the mosquitto broker, i used MQTTX - host: mqtt://test.mosquitto.org:1883 - set a username/password before connecting
 
--   Devices stored in ongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
+-   Devices stored in mongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
 
 ## TODO
 
 -   szakdogába írni: mqttx és használata
 
--   some minimal design - different text whether a user logged in or not - delete button on the right side (when listing dashboards) - show toolhint when hovering over the canvas buttons
-
--   add humidity database model - implement in backend - set up with mqtt gateway
-
 -   remove mongodb from project - just comment it out - composer remove jenssegers/mongodb
+
+-   be able to rename the dashboard name - remove charts for this ... button
 
 -   dockerize project (only when everything is done) - install from php7.4 base image - COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 -   canvas delete button decrease time interval
 
 -   refresh migrations and do windows and walls db layout as doors
-
--   be able to rename the dashboard name
 
 -   dashboardController should be 2 seperate controller - for better readability
 
