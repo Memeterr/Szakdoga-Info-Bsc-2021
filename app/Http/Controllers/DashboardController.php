@@ -13,9 +13,9 @@ use App\Models\CanvasWindow;
 use App\Models\CanvasDoor;
 use App\Models\CanvasWall;
 use App\Models\Dashboard;
-use App\Models\User;
 use App\Models\Light;
 use App\Models\Thermometer;
+use App\Models\Humidity;
 
 use Illuminate\Http\Request;
 
@@ -56,7 +56,7 @@ class DashboardController extends Controller
 
         $lights = Light::with('user')->where('dashboard_id', $dashboard->id)->get();
         $thermos = Thermometer::with('user')->where('dashboard_id', $dashboard->id)->get();
-        $humidities = [];
+        $humidities = Humidity::with('user')->where('dashboard_id', $dashboard->id)->get();
 
         $url = Storage::url($dashboard->imagePath);
 
@@ -180,6 +180,23 @@ class DashboardController extends Controller
                     'topics' => $value['topics'],
                 ]);
             }
+            if (Str::contains($key, 'humidity')) {
+                $topics = explode(",", $request->light_0['topics']);
+                $topic1 = explode(":", $topics[0]);
+                $topic2 = explode(":", $topics[1]);
+                $pwd = Hash::make($value['pwd']);
+
+                // pgsql
+                Humidity::create([
+                    'user_id' => $request->user()->id,
+                    'dashboard_id' => $dash_id,
+                    'x' => $value['x'],
+                    'y' => $value['y'],
+                    'name' => $value['name'],
+                    'password' => $pwd,
+                    'topics' => $value['topics'],
+                ]);
+            }
         }
 
         return redirect()->route('dashboard');
@@ -217,6 +234,10 @@ class DashboardController extends Controller
                 }
                 if (Str::contains($key, 'thermo')) {
                     Thermometer::where('id', $value['id'])
+                        ->delete();
+                }
+                if (Str::contains($key, 'humidity')) {
+                    Humidity::where('id', $value['id'])
                         ->delete();
                 }
             }
@@ -294,6 +315,24 @@ class DashboardController extends Controller
 
                     // pgsql
                     Thermometer::create([
+                        'user_id' => $request->user()->id,
+                        'dashboard_id' => $dashboard->id,
+                        'x' => $value['x'],
+                        'y' => $value['y'],
+                        'name' => $value['name'],
+                        'password' => $pwd,
+                        'topics' => $value['topics'],
+                    ]);
+                }
+                if (Str::contains($key, 'humidity')) {
+
+                    $topics = explode(",", $value['topics']);
+                    $topic1 = explode(":", $topics[0]);
+                    $topic2 = explode(":", $topics[1]);
+                    $pwd = Hash::make($value['pwd']);
+
+                    // pgsql
+                    Humidity::create([
                         'user_id' => $request->user()->id,
                         'dashboard_id' => $dashboard->id,
                         'x' => $value['x'],

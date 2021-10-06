@@ -10,33 +10,43 @@ class Dashboard extends Model
     use HasFactory;
 
     protected $fillable = [
-    	'name',
+        'name',
         'imageSet',
         'imagePath'
     ];
 
-    public function user() {
-    	return $this->belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function windows() {
+    public function windows()
+    {
         return $this->hasMany(CanvasWindow::class);
     }
 
-    public function doors() {
+    public function doors()
+    {
         return $this->hasMany(CanvasDoor::class);
     }
 
-    public function walls() {
+    public function walls()
+    {
         return $this->hasMany(CanvasWall::class);
     }
 
-    public function lights() {
+    public function lights()
+    {
         return $this->hasMany(Light::class);
     }
 
-    public function thermos() {
+    public function thermos()
+    {
         return $this->hasMany(Thermometer::class);
     }
 
+    public function humidities()
+    {
+        return $this->hasMany(Humidity::class);
+    }
 }
