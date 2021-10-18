@@ -12,7 +12,7 @@
                 We hope you're satisfied with the website.
             @else
                 This is a Laravel application for creating smart homes. <br>
-                To use the website and it's features, you need to register.
+                To use the website and it's features, you need to register or login to an existing account.
             @endauth
         </div>
     </div>

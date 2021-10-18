@@ -30,8 +30,10 @@
 		<img src="{{ $url }}" style="display: none;">
         @endif
 
+        {{--
         <a href="{{ route('charts') }}" class="select-none font-semibold px-3 py-2 rounded-md text-base font-medium text-black-300 hover:text-white hover:bg-gray-700">
             Charts for this dashboard</a>
+        --}}
 
         <form id="form" class="flex mb-0" action="{{ route('dashboard.update', $dashboard) }}" method="post">
             @csrf

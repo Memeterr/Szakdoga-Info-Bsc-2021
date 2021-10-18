@@ -1,90 +1,33 @@
-FROM php:7.4-alpine
+FROM php:7.4
 
-WORKDIR /app
-
-# Install dev dependencies
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    curl-dev \
-    imagemagick-dev \
-    libtool \
-    libxml2-dev \
-    postgresql-dev \
-    sqlite-dev
-
-# Install production dependencies
-RUN apk add --no-cache \
-    bash \
+RUN apt-get update && apt-get install -y \
     curl \
-    freetype-dev \
-    git \
-    icu-dev \
-    icu-libs \
-    imagemagick \
-    libc-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
-    libzip-dev \
-    make \
-    mysql-client \
+    zip \
+    unzip \
+    openssl \
+    postgresql \
+    libpq-dev \
     nodejs \
-    nodejs-npm \
-    oniguruma-dev \
-    yarn \
-    openssh-client \
-    postgresql-libs \
-    rsync \
-    zlib-dev
+    && docker-php-ext-install pdo pdo_pgsql \
+    && rm -rf /var/lib/apt/lists
 
-# Install PECL and PEAR extensions
-RUN pecl install \
-    redis \
-    imagick \
-    xdebug
+COPY composer* /usr/src/app/
+COPY .env.example /usr/src/app/.env
 
-# Enable PECL and PEAR extensions
-RUN docker-php-ext-enable \
-    redis \
-    imagick \
-    xdebug
+WORKDIR /usr/src/app
 
-# Configure php extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+COPY . .
 
-# Install php extensions
-RUN docker-php-ext-install \
-    bcmath \
-    calendar \
-    curl \
-    exif \
-    gd \
-    iconv \
-    intl \
-    mbstring \
-    pdo \
-    pdo_pgsql \
-    pcntl \
-    soap \
-    tokenizer \
-    xml \
-    zip
-
-# Install composer
-ENV COMPOSER_HOME /composer
-ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
-ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-
-#Set up app
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer install
-RUN npm install
-RUN npm run dev
 
-# Cleanup dev dependencies
-RUN apk del -f .build-deps
+RUN npm install \
+    npm run dev
 
+RUN php artisan key:generate \
+    php artisan config:cache \
+    php artisan migrate \
+    php artisan storage:link
 
-COPY . /app
-
+CMD php artisan serve --host=0.0.0.0 --port=8000
 EXPOSE 8000
-CMD php artisan serve

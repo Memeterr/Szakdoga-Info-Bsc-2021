@@ -52,7 +52,7 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 -   remove mongodb from project - just comment it out - composer remove jenssegers/mongodb
 
--   be able to rename the dashboard name - remove charts for this ... button
+-   be able to rename the dashboard name
 
 -   dockerize project (only when everything is done) - install from php7.4 base image - COPY --from=composer /usr/bin/composer /usr/bin/composer
 
@@ -76,7 +76,7 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## KNOWN BUGS
 
--   when adding multiple iot devices they get the same topics
+-   when adding multiple iot devices they get the same topics (needs check)
 
 -   GET https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg net::ERR_CONNECTION_TIMED_OUT - get maybe a new logo
 
