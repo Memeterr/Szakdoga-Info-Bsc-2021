@@ -1,33 +1,30 @@
-FROM php:7.4
+FROM php:7.4-alpine3.14
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    zip \
-    unzip \
-    openssl \
-    postgresql \
-    libpq-dev \
-    nodejs \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && rm -rf /var/lib/apt/lists
+WORKDIR /app
 
-COPY composer* /usr/src/app/
-COPY .env.example /usr/src/app/.env
-
-WORKDIR /usr/src/app
-
+COPY .env.example ./.env
 COPY . .
 
+RUN apk add --no-cache --virtual .gyp \
+    python3 \
+    make \
+    g++ \
+    nodejs \
+    npm \
+    postgresql-dev \
+    libpq \
+    && docker-php-ext-install pdo pdo_pgsql \
+    && npm install \
+    && npm run dev
+
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-RUN composer install
+RUN composer install && composer update
 
-RUN npm install \
-    npm run dev
+RUN php artisan key:generate
+RUN php artisan config:cache
+RUN php artisan migrate
+RUN php artisan storage:link
 
-RUN php artisan key:generate \
-    php artisan config:cache \
-    php artisan migrate \
-    php artisan storage:link
-
-CMD php artisan serve --host=0.0.0.0 --port=8000
 EXPOSE 8000
+CMD php artisan serve --host=0.0.0.0 --port=8000
+# CMD php artisan serve --host=0.0.0.0 --port=8000

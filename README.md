@@ -48,13 +48,16 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 
 ## TODO
 
--   szakdogába írni: mqttx és használata
+-   When regisering a new user check whether that use already exists - ERROR: duplicate key value violates unique constraint "users_email_unique" DETAIL: Key (email)=(asd@asd.asd) already exists.
+
+-   images are not loaded in (something with docker, in docker cli storage link can generate: The [/app/public/storage] link has been connected to [/app/storage/app/public].)
+-   could be also that images are not cloned from git repo
+
+-   szakdogába írni: mqttx és használata + dockerized project
 
 -   remove mongodb from project - just comment it out - composer remove jenssegers/mongodb
 
 -   be able to rename the dashboard name
-
--   dockerize project (only when everything is done) - install from php7.4 base image - COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 -   canvas delete button decrease time interval
 

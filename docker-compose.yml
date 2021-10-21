@@ -1,12 +1,14 @@
-version: '2'
+version: "2"
 services:
   app:
+    image: smarthome-app
     build: .
+    container_name: "smarthome-app"
     volumes:
       - .:/app
-    env_file: .env
+      - /app/vendor
+    env_file: .env.example
     working_dir: /app
-    command: 'php artisan migrate && php artisan serve'
     ports:
       - "8000:8000"
     depends_on:
@@ -16,16 +18,18 @@ services:
 
   db:
     image: postgres
+    container_name: "smarthome-db"
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: debian
       POSTGRES_DB: smarthome
     ports:
-        - "5432:5432"
+      - "5432:5432"
 
   adminer:
     image: adminer
+    container_name: "smarthome-adminer"
     restart: always
     ports:
       - 8080:8080
