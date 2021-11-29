@@ -1,61 +1,33 @@
 # Info
 
-This is a project for my thesis
+This is the project for my 2021 SZTE IT thesis
 
-## Install
+## Installation
 
-First you need to set up the workspace
+-   Clone the repository to local machine
 
--   install php 7.4 non-thread safe
--   enable extensions
--   install mongodb PHP extension: https://www.php.net/manual/en/mongodb.installation.windows.php
--   set up a postgresql server
--   you may need to add the postgres \bin directory to your PATH
+In the cloned repository, run the following commands:
 
-Run these commands in the cloned/downloaded repo:
+-   docker-compose build
 
--   composer require jenssegers/mongodb
--   composer install
--   npm install
--   npm run dev
--   copy .env.example and rename it to .env
--   create a database
--   in .env file set up the database connection
--   php artisan key:generate
--   php artisan config:cache
--   php artisan migrate
--   php artisan storage:link
+-   docker-compose up
 
-After this you can run a dev server using the following command:
-
--   php artisan serve
-
-You can access the website at
+You can access the website at:
 
 -   localhost:8000
 
-MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
-
 ## IMPORTANT NOTES
 
--   As of now, the application cannot run without the installation of the SZTE iot gateway (github.com/sed-szeged/iotgateway) - to use the app, you need to start the iot gateway docker images
-
--   I use a public broker for testing (https://test.mosquitto.org) - host: ws://test.mosquitto.org:8081 - set a username/password before connecting
+-   I used a public broker for testing (https://test.mosquitto.org) - host: ws://test.mosquitto.org:8081 - set a username/password before connecting
 
 -   To send data to the app through the mosquitto broker, i used MQTTX - host: mqtt://test.mosquitto.org:1883 - set a username/password before connecting
 
--   Devices stored in mongoDB like this: asd-1 , where 'asd' is the name and the '1' is the dashboard id
-
-## TODO
+## TODO / FUTURE WORK
 
 -   When regisering a new user check whether that use already exists - ERROR: duplicate key value violates unique constraint "users_email_unique" DETAIL: Key (email)=(asd@asd.asd) already exists.
 
 -   images are not loaded in (something with docker, in docker cli storage link can generate: The [/app/public/storage] link has been connected to [/app/storage/app/public].)
 -   could be also that images are not cloned from git repo
-
--   szakdogába írni: mqttx és használata + dockerized project
-
--   remove mongodb from project - just comment it out - composer remove jenssegers/mongodb
 
 -   be able to rename the dashboard name
 
@@ -64,18 +36,6 @@ MongoDB Compass connection string: mongodb://localhost:27017/mqttadmin
 -   refresh migrations and do windows and walls db layout as doors
 
 -   dashboardController should be 2 seperate controller - for better readability
-
-## TODO FIX BROKER
-
--   Plain WebSockets - listener 8080 - protocol websockets
-
--   manage to connect to iotgateway through mqttx - on port 1883 you can only connect to a created device - device name / password
-
--   config szte broker to support websockets - iotgateway/mosquitto-auth-plugin/mosquitto/config.mk ==> line 72 - iotgateway/mosquitto-auth-plugin/mosquitto/mosquitto.conf - set websocket listening port - netstat -ab
-
--   on windows it appears that Intel started using this port for some of their drivers. Bad Intel. - fix: - Start menu - Type: Services - Find the service called: Intel(R) Graphics Command Center Service - Rightclick > Properties > Startup type = Disabled
-
--   let the port through the firewall
 
 ## KNOWN BUGS
 
